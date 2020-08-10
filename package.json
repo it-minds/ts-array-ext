@@ -1,12 +1,13 @@
 {
   "name": "ts-array-ext",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "A small library with typed array operations.",
   "main": "index.js",
   "types": "index.d.ts",
   "scripts": {
     "build": "tsc",
-    "prepublish": "tsc"
+    "prepublish": "tsc",
+    "test": "node tests"
   },
   "keywords": [
     "array",

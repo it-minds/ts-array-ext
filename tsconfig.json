@@ -2,10 +2,13 @@
   "compilerOptions": {
     "module": "commonjs",
     "target": "es6",
+    "lib": ["dom", "es2017"],
     "rootDir": ".",
     "sourceMap": true,
     "strict": false,
-    "noImplicitAny": true
+    "noImplicitAny": true,
+    "declaration": true
   },
-  "include": ["index.d.ts", "index.ts"]
+  "include": ["**/*.ts"],
+  "exclude": ["node_modules"]
 }
