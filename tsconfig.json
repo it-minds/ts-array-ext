@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es6",
+    "rootDir": ".",
+    "sourceMap": true,
+    "strict": false,
+    "noImplicitAny": true
+  },
+  "include": ["index.d.ts", "index.ts"]
+}

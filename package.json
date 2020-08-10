@@ -1,0 +1,21 @@
+{
+  "name": "ts-array-ext",
+  "version": "1.0.0",
+  "description": "A small library with typed array operations.",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "prepublish": "tsc"
+  },
+  "keywords": [
+    "array",
+    "typescript"
+  ],
+  "author": "Martin Johannesson <mjh@it-minds.dk>",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^3.9.7",
+    "uglify-js": "^3.10.1"
+  }
+}
