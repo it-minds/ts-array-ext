@@ -66,8 +66,6 @@ const highestScore = myArr.max(x => x.score);
 
 ```typescript
 const map = myArr.groupBy(x => x.userId);
-
-map.forEach((arr, key) => {});
 ```
 
 It is possible to add another callback for each of the groups' array.

@@ -24,6 +24,6 @@ interface Array<T> {
 
   average(callbackfn: (value: T) => number, thisArg?: any[]): number;
 
-  min(callbackfn: (value: T) => number, thisArg?: any[]): number;
-  max(callbackfn: (value: T) => number, thisArg?: any[]): number;
+  min(callbackfn: (value: T) => number, thisArg?: any[]): T;
+  max(callbackfn: (value: T) => number, thisArg?: any[]): T;
 }

@@ -20,18 +20,13 @@ Array.prototype.groupBy = function (callback, func?, thisArg = this) {
     return acc;
   }, {});
 
-  const result: any = {};
-
   if (func) {
     Object.keys(groupArr).forEach(key => {
       groupArr[key] = func(groupArr[key]);
     });
   }
-  // result.map(elements => {
-  //   result[key] = func(elements);
-  // });
 
-  return result;
+  return groupArr;
 };
 
 Array.prototype.sum = function (func, thisArg = this) {
