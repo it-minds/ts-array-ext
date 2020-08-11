@@ -44,3 +44,11 @@ Array.prototype.min = function (func, thisArg = this) {
 Array.prototype.max = function (func, thisArg = this) {
   return thisArg.sortByAttr(func, SortDirection.DESC, thisArg)[0];
 };
+
+Array.prototype.median = function (func, tieBreaker = -1, thisArg = this) {
+  const sorted = thisArg.sortByAttr(func, SortDirection.ASC, thisArg);
+  const middle = sorted.length / 2;
+  if (Number.isInteger(middle)) return sorted[middle];
+
+  return sorted[tieBreaker < 0 ? Math.floor(middle) : Math.ceil(middle)];
+};

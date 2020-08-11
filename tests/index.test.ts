@@ -34,6 +34,12 @@ describe("calculate", function () {
     expect(result).equal(1000);
   });
 
+  it("median", function () {
+    let score = myArr.median(x => x.score);
+    let result = score.score;
+    expect(result).equal(200);
+  });
+
   it("avg", function () {
     let result = myArr.average(x => x.score);
     expect(result).equal(509.8);

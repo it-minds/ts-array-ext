@@ -26,4 +26,9 @@ interface Array<T> {
 
   min(callbackfn: (value: T) => number, thisArg?: any[]): T;
   max(callbackfn: (value: T) => number, thisArg?: any[]): T;
+  median(
+    callbackfn: (value: T) => number,
+    tieBreaker?: -1 | 1,
+    thisArg?: any[]
+  ): T;
 }

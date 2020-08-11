@@ -60,6 +60,14 @@ const lowestScore = myArr.min(x => x.score);
 const highestScore = myArr.max(x => x.score);
 ```
 
+## Median
+
+### Usage
+
+```typescript
+const medianScore = myArr.median(x => x.score);
+```
+
 ## GroupBy
 
 ### Usage
