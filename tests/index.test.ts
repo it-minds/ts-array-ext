@@ -6,15 +6,90 @@ type Score = {
   id: number;
   userId: number;
   score: number;
+  nickName: string;
 };
 
 const myArr: Score[] = [
-  { id: 1, userId: 1, score: 1000 },
-  { id: 2, userId: 2, score: 999 },
-  { id: 3, userId: 2, score: 200 },
-  { id: 4, userId: 2, score: 200 },
-  { id: 5, userId: 1, score: 150 }
+  { id: 1, userId: 1, score: 1000, nickName: "aa" },
+  { id: 3, userId: 2, score: 200, nickName: "bb" },
+  { id: 5, userId: 1, score: 150, nickName: "ba" },
+  { id: 2, userId: 2, score: 999, nickName: "zx" },
+  { id: 4, userId: 2, score: 200, nickName: "ce" }
 ];
+
+describe("sort", function () {
+  it("ASC with enum", function () {
+    let result = myArr.sortByAttr(a => a.score, SortDirection.ASC);
+
+    expect(result[0].score).equal(150);
+    expect(result[4].score).equal(1000);
+  });
+
+  it("ASC with num", function () {
+    let result = myArr.sortByAttr(a => a.score, 0);
+
+    expect(result[0].score).equal(150);
+    expect(result[4].score).equal(1000);
+  });
+
+  it("DESC with enum ", function () {
+    let result = myArr.sortByAttr(a => a.score, SortDirection.DESC);
+
+    expect(result[0].score).equal(1000);
+    expect(result[4].score).equal(150);
+  });
+
+  it("DESC with num", function () {
+    let result = myArr.sortByAttr(a => a.score, 1);
+
+    expect(result[0].score).equal(1000);
+    expect(result[4].score).equal(150);
+  });
+
+  it("ASC by string with num", function () {
+    let result = myArr.sortByAttr(a => a.nickName);
+
+    expect(result[0].score).equal(1000);
+    expect(result[4].score).equal(999);
+  });
+
+  it("DESC by string with num", function () {
+    let result = myArr.sortByAttr(a => a.nickName, 1);
+
+    expect(result[0].score).equal(999);
+    expect(result[4].score).equal(1000);
+  });
+
+  it("Shuffle Then sort", function () {
+    let result = myArr
+      .shuffle()
+      .shuffle()
+      .sortByAttr(a => a.score);
+
+    expect(result[0].score).equal(150);
+    expect(result[4].score).equal(1000);
+  });
+});
+
+describe("shuffle", () => {
+  it("Shuffle Then sort", function () {
+    let roll = 0;
+    let counts: { [k: number]: number } = {};
+
+    for (let i = 1; i <= 5; i++) {
+      counts[i] = 0;
+    }
+
+    while (roll < 1000000) {
+      roll++;
+      counts[myArr.shuffle()[0].id]++;
+    }
+
+    const result = Object.values(counts).filter(x => x > 190000 && x < 210000)
+      .length;
+    expect(result).equal(5);
+  });
+});
 
 describe("calculate", function () {
   it("sum", function () {
@@ -66,14 +141,10 @@ describe("groupBy", function () {
     expect(groups[2]).equal(1399);
   });
 
-  it("groupByThenRandomSort", function () {
+  it("groupByThenShuffle", function () {
     let groups = myArr.groupBy(
       x => x.score,
-      arr =>
-        arr
-          .map(val => ({ sort: Math.random(), val }))
-          .sortByAttr(x => x.sort)
-          .map(x => x.val)
+      arr => arr.shuffle()
     );
 
     expect(Object.keys(groups).length).equal(4);

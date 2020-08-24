@@ -9,10 +9,11 @@ declare interface TypeSafeColDef<T extends object> {
 
 interface Array<T> {
   sortByAttr<K extends keyof T>(
-    callbackfn: (value: T) => T[K],
+    callbackfn: (value: T) => string | number,
     sortDirection?: SortDirection,
     thisArg?: any[]
   ): T[];
+  shuffle(thisArg?: any[]): T[];
 
   sum(callbackfn: (value: T) => number, thisArg?: any[]): number;
 

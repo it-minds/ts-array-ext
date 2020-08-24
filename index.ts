@@ -4,9 +4,25 @@ Array.prototype.sortByAttr = function (
   sortDirection = SortDirection.ASC,
   thisArg = this
 ) {
-  return thisArg.sort((a: any, b: any) =>
-    sortDirection === SortDirection.ASC ? func(a) - func(b) : func(b) - func(a)
-  );
+  return thisArg.sort((a: any, b: any) => {
+    if (typeof func(a) !== typeof func(b))
+      throw Error("Type of attribute differs on the object");
+    switch (typeof func(a)) {
+      case "number":
+        return sortDirection === SortDirection.ASC
+          ? (func(a) as number) - (func(b) as number)
+          : (func(b) as number) - (func(a) as number);
+
+      case "string":
+        return sortDirection === SortDirection.ASC
+          ? (func(a) as string) > (func(b) as string)
+            ? 1
+            : -1
+          : (func(b) as string) > (func(a) as string)
+          ? 1
+          : -1;
+    }
+  });
 };
 
 Array.prototype.groupBy = function (callback, func?, thisArg = this) {
@@ -43,6 +59,18 @@ Array.prototype.min = function (func, thisArg = this) {
 
 Array.prototype.max = function (func, thisArg = this) {
   return thisArg.sortByAttr(func, SortDirection.DESC, thisArg)[0];
+};
+
+Array.prototype.shuffle = function (thisArg = this) {
+  return thisArg
+    .map(val => ({
+      sort:
+        Math.floor(Math.pow(10, 14) * Math.random() * Math.random()) %
+        (thisArg.length * 100),
+      val
+    }))
+    .sortByAttr(x => x.sort)
+    .map(x => x.val);
 };
 
 Array.prototype.median = function (func, tieBreaker = -1, thisArg = this) {

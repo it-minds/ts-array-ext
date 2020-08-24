@@ -17,6 +17,9 @@ const myArr: Score[] = [
 
 ## SortByArg
 
+Shorthand for sorting an array by a single comparable attribute.
+Additional options for sorting descending.
+
 ### Usage
 
 ```typescript
@@ -26,6 +29,16 @@ const lowestFirst = myArr.SortByArg(
 );
 
 const highestFirst = myArr.SortByArg(x => x.score, SortDirection.DESC);
+```
+
+## Shuffle
+
+Shorthand for shuffling an array.
+
+### Usage
+
+```typescript
+const randomSortArr = myArr.shuffle();
 ```
 
 ## Sum
