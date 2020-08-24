@@ -25,5 +25,11 @@
     "ts-node": "^8.10.2",
     "typescript": "^3.9.7",
     "uglify-js": "^3.10.1"
+  },
+  "repository": {
+    "url": "git://github.com/objmj-itminds/ts-array-ext.git"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
   }
 }
