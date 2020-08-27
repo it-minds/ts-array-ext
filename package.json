@@ -28,8 +28,5 @@
   },
   "repository": {
     "url": "git://github.com/objmj-itminds/ts-array-ext.git"
-  },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
   }
 }
