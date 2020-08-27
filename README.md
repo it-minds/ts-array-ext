@@ -24,7 +24,7 @@ Additional options for sorting descending.
 
 ```typescript
 const lowestFirst = myArr.SortByArg(
-  x => x.score
+  x => x.score,
   SortDirection.ASC // is default, but you can be explicit
 );
 

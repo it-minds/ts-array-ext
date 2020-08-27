@@ -151,3 +151,58 @@ describe("groupBy", function () {
     expect(groups[200].length).equal(2);
   });
 });
+
+describe("chunk", function () {
+  let baseArr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
+
+  it("chunkByCount", function () {
+    let groups = baseArr.chunkByCount(3);
+
+    expect(groups[0].length).equal(6);
+    expect(groups[1].length).equal(6);
+    expect(groups[2].length).equal(5);
+  });
+
+  it("chunkByCountFair", function () {
+    let groups = baseArr.chunkByCount(3, true);
+
+    expect(groups[0].length).equal(5);
+    expect(groups[1].length).equal(5);
+    expect(groups[2].length).equal(5);
+  });
+
+  it("chunkBySize", function () {
+    let groups = baseArr.chunkBySize(7);
+
+    expect(groups[0].length).equal(7);
+    expect(groups[1].length).equal(7);
+    expect(groups[2].length).equal(3);
+  });
+
+  it("chunkBySizeFairMore", function () {
+    let groups = baseArr.chunkBySize(7, true);
+
+    expect(groups[0].length).equal(6);
+    expect(groups[1].length).equal(6);
+    expect(groups[2].length).equal(5);
+  });
+
+  it("chunkBySizeFairFewer", function () {
+    const baseArr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
+
+    let groups = baseArr.chunkBySize(7, true);
+
+    expect(groups[0].length).equal(8);
+    expect(groups[1].length).equal(7);
+  });
+
+  it("chunkBySizeFairFewerWithMax", function () {
+    const baseArr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
+
+    let groups = baseArr.chunkBySize(7, true, true);
+
+    expect(groups[0].length).equal(5);
+    expect(groups[1].length).equal(5);
+    expect(groups[2].length).equal(5);
+  });
+});
