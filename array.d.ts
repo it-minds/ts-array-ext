@@ -77,6 +77,8 @@ interface Array<T> {
   /**
    * Shorthand for finding element with minimum value of an attribute.
    *
+   * @returns The entire element found. So if you write `x => x.score` x is returned.
+   *
    * Examples:
    * ```typescript
    * const minScore = myArr.min(x => x.score);
@@ -87,6 +89,8 @@ interface Array<T> {
 
   /**
    * Shorthand for finding element with maximum value of an attribute.
+   *
+   * @returns The entire element found. So if you write `x => x.score` x is returned.
    *
    * Examples:
    * ```typescript
@@ -99,6 +103,8 @@ interface Array<T> {
   /**
    * Shorthand for finding element with median value of an attribute.
    * Tiebreaker option is available for even length ranges. Defaults by taking the **lower** of the two.
+   *
+   * @returns The entire element found. So if you write `x => x.score` x is returned.
    *
    * Examples:
    * ```typescript
@@ -113,16 +119,93 @@ interface Array<T> {
     thisArg?: any[]
   ): T;
 
+  /**
+   * Split an array into X amount of chunks.
+   *
+   * Optional force fairness that strips the array down so `% X === 0`
+   *
+   * Example:
+   * ```typescript
+   * const chunks = myArr.chunkByCount(5);
+   * //If the arr contains 21 elements, the 21st element will be part of the first array.
+   * const chunks = myArr.chunkByCount(5, true);
+   * //If the arr contains 21 elements, the 21st element wont be part of the result here.
+   * ```
+   */
   chunkByCount(
     chunkCount: number,
     forceFariness?: boolean,
     thisArg?: any[]
   ): T[][];
 
+  /**
+   * Split an array into an amount of chunks depending on size.
+   *
+   * Optional force fairness that distributes elements into "fair" groups.
+   * The this paramter treatChunkSizeAsMax prevents the force fairness from distributing
+   * elements into groups at the request size.
+   *
+   * Example:
+   * ```typescript
+   * const chunks = myArr.chunkBySize(5);
+   * // If the arr contains 21 elements, the 21st element will be alone in its own array.
+   * // Sizes of the different arrays: `5,5,5,5,1`
+   * const chunks = myArr.chunkBySize(5, true);
+   * // If the arr contains 21 elements, the 21st element will pe part of the first array.
+   * // Sizes of the different arrays: `6,5,5,5`
+   * const chunks = myArr.chunkBySize(5, true, true);
+   * // If the arr contains 21 elements, all elements will be distributed evenly into 5 groups.
+   * // Sizes of the different arrays: `5,4,4,4,4`
+   * ```
+   */
   chunkBySize(
     chunkSize: number,
     forceFariness?: boolean,
     treatChunkSizeAsMax?: boolean,
     thisArg?: any[]
   ): T[][];
+
+  /**
+   * Given a predicate of finding an element and another element to take its place.
+   * Mutates the array and returns the found (old) element.
+   *
+   * Example:
+   * ```typescript
+   * const oldElement = myArr.findAndReplace(x => x.score === 100, new Score())
+   * ```
+   */
+  findAndReplace(
+    predicate?: (value: T, index: number, obj: T[]) => boolean,
+    replaceVal?: T,
+    thisArg?: any[]
+  ): T;
+
+  /**
+   * Avoid having to fiddle with promise accumulator and resolution in a .reduce.
+   *
+   *
+   *
+   * Example: (a map would be better here - sue me)
+   * ```typescript
+   * const resultProm = myArr.reduceAsync<ExtendedScore[]>(async (acc, cur) => {
+   *   const addOnAttr = await new Promise<string>(resolve =>
+   *     setTimeout(() => resolve(Date.now().toString(24)), 5)
+   *   );
+   *
+   *   (cur as ExtendedScore).fetchedAttr = addOnAttr;
+   *
+   *   return [...acc, cur as ExtendedScore];
+   * }, []);
+   * ```
+   */
+  reduceAsync<U = T>(
+    callbackfn: (
+      previousValue: U,
+      currentValue: T,
+      currentIndex: number,
+      array: T[]
+    ) => Promise<U>,
+    initialVal: U,
+    thisArg?: any[]
+  ): Promise<U>;
 }

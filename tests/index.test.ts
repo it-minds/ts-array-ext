@@ -206,3 +206,42 @@ describe("chunk", function () {
     expect(groups[2].length).equal(5);
   });
 });
+
+describe("async test", () => {
+  it("simple reduce", async () => {
+    type ExtendedScore = Score & {
+      fetchedAttr: string;
+    };
+
+    const resultProm = myArr.reduceAsync<ExtendedScore[]>(async (acc, cur) => {
+      const addOnAttr = await new Promise<string>(resolve =>
+        setTimeout(() => resolve(Date.now().toString(24)), 5)
+      );
+
+      (cur as ExtendedScore).fetchedAttr = addOnAttr;
+
+      return [...acc, cur as ExtendedScore];
+    }, []);
+
+    expect(resultProm).property("then");
+    expect(resultProm).property("catch");
+    const result = await resultProm;
+    expect(result[0]).property("fetchedAttr");
+  });
+});
+
+describe("findAndReplace", () => {
+  it("single element", () => {
+    myArr.sortByAttr(x => x.id);
+
+    const oldScore = myArr.findAndReplace(x => x.id === 5, {
+      id: 5,
+      nickName: "newNickName",
+      score: 5,
+      userId: 55
+    });
+
+    expect(myArr[4].nickName).equal("newNickName");
+    expect(oldScore.nickName).equal("ba");
+  });
+});

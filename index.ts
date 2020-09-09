@@ -5,13 +5,8 @@ Array.prototype.sortByAttr = function (
   thisArg = this
 ) {
   return thisArg.sort((a: any, b: any) => {
-    return sortDirection === SortDirection.ASC
-      ? func(a) > func(b)
-        ? 1
-        : -1
-      : func(b) > func(a)
-      ? 1
-      : -1;
+    const varcase = sortDirection === SortDirection.ASC ? 1 : -1;
+    return func(a) > func(b) ? varcase : -varcase;
   });
 };
 
@@ -40,6 +35,7 @@ Array.prototype.sum = function (func = x => x, thisArg = this) {
 };
 
 Array.prototype.average = function (func = x => x, thisArg = this) {
+  if (thisArg.length <= 0) throw Error("Out of bounds");
   return thisArg.sum(func, thisArg) / thisArg.length;
 };
 
@@ -143,4 +139,25 @@ Array.prototype.chunkBySize = function (
   }
 
   return result;
+};
+
+Array.prototype.findAndReplace = function (
+  predicate,
+  replaceVal,
+  thisArg = this
+) {
+  const oldIndex = thisArg.findIndex(predicate);
+  if (oldIndex === -1) return null;
+  const oldItem = thisArg[oldIndex];
+  thisArg[oldIndex] = replaceVal;
+  return oldItem;
+};
+
+Array.prototype.reduceAsync = function (callback, initialVal, thisArg = this) {
+  const prom = thisArg.reduce(async (accProm, cur, i, arr) => {
+    const acc = await accProm;
+    return await callback(acc, cur, i, arr);
+  }, Promise.resolve(initialVal));
+
+  return prom;
 };
