@@ -28,5 +28,11 @@
   },
   "repository": {
     "url": "git://github.com/objmj-itminds/ts-array-ext.git"
+  },
+  "prettier": {
+    "arrowParens": "avoid",
+    "tabWidth": 2,
+    "useTabs": false,
+    "trailingComma": "none"
   }
 }
