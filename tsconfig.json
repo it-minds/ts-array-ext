@@ -7,8 +7,9 @@
     "sourceMap": true,
     "strict": false,
     "noImplicitAny": true,
-    "declaration": true
+    "declaration": true,
+    "outDir": "build"
   },
   "include": ["**/*.ts"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "build/**/*"]
 }
