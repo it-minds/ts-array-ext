@@ -144,10 +144,17 @@ Array.prototype.chunkBySize = function (
 Array.prototype.findAndReplace = function (
   predicate,
   replaceVal,
+  addIfNotFound,
   thisArg = this
 ) {
   const oldIndex = thisArg.findIndex(predicate);
-  if (oldIndex === -1) return null;
+  if (oldIndex === -1) {
+    if (!addIfNotFound) {
+      return null;
+    }
+    thisArg.push(replaceVal);
+    return null;
+  }
   const oldItem = thisArg[oldIndex];
   thisArg[oldIndex] = replaceVal;
   return oldItem;
