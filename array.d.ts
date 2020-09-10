@@ -184,8 +184,8 @@ interface Array<T> {
    * ```
    */
   findAndReplace(
-    predicate?: (value: T, index: number, obj: T[]) => boolean,
-    replaceVal?: T,
+    predicate: (value: T, index: number, obj: T[]) => boolean,
+    replaceVal: T,
     addIfNotFound?: boolean,
     thisArg?: any[]
   ): T;
