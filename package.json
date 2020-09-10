@@ -27,6 +27,6 @@
     "uglify-js": "^3.10.4"
   },
   "repository": {
-    "url": "git://github.com/objmj-itminds/ts-array-ext.git"
+    "url": "git://github.com/it-minds-opensource/ts-array-ext.git"
   }
 }
