@@ -215,7 +215,7 @@ describe("async test", () => {
 
     const resultProm = myArr.reduceAsync<ExtendedScore[]>(async (acc, cur) => {
       const addOnAttr = await new Promise<string>(resolve =>
-        setTimeout(() => resolve(Date.now().toString(24)), 5)
+        setTimeout(() => resolve("SOMETHING_NEW"), 5)
       );
 
       (cur as ExtendedScore).fetchedAttr = addOnAttr;
@@ -227,19 +227,22 @@ describe("async test", () => {
     expect(resultProm).property("catch");
     const result = await resultProm;
     expect(result[0]).property("fetchedAttr");
+    expect(result[0].fetchedAttr).equal("SOMETHING_NEW");
   });
 });
 
 describe("findAndReplace", () => {
   it("single element", () => {
-    myArr.sortByAttr(x => x.id);
-
-    const oldScore = myArr.findAndReplace(x => x.id === 5, {
+    const newScore: Score = {
       id: 5,
       nickName: "newNickName",
       score: 5,
       userId: 55
-    });
+    };
+
+    const oldScore = myArr
+      .sortByAttr(x => x.id)
+      .findAndReplace(x => x.id === newScore.id, newScore);
 
     expect(myArr[4].nickName).equal("newNickName");
     expect(oldScore.nickName).equal("ba");

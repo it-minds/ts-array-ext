@@ -134,7 +134,7 @@ interface Array<T> {
    */
   chunkByCount(
     chunkCount: number,
-    forceFariness?: boolean,
+    forceFairness?: boolean,
     thisArg?: any[]
   ): T[][];
 
@@ -160,7 +160,7 @@ interface Array<T> {
    */
   chunkBySize(
     chunkSize: number,
-    forceFariness?: boolean,
+    forceFairness?: boolean,
     treatChunkSizeAsMax?: boolean,
     thisArg?: any[]
   ): T[][];
@@ -175,8 +175,8 @@ interface Array<T> {
    * ```
    */
   findAndReplace(
-    predicate?: (value: T, index: number, obj: T[]) => boolean,
-    replaceVal?: T,
+    predicate: (value: T, index: number, obj: T[]) => boolean,
+    replaceVal: T,
     thisArg?: any[]
   ): T;
 
