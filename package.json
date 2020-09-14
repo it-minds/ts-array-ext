@@ -27,6 +27,12 @@
     "uglify-js": "^3.10.4"
   },
   "repository": {
-    "url": "git://github.com/IT-Minds-opensource/ts-array-ext.git"
+    "url": "git://github.com/it-minds-opensource/ts-array-ext.git"
+  },
+  "prettier": {
+    "arrowParens": "avoid",
+    "tabWidth": 2,
+    "useTabs": false,
+    "trailingComma": "none"
   }
 }

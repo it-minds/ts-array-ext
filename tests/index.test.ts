@@ -31,6 +31,7 @@ import * as data from "./test.data.json";
 const myArr: Score[] = data;
 
 const ASSERTIONS = {
+  ARRAY_LENGTH: 17,
   MAX_AGE: 49,
   MIN_AGE: 20,
   LOWEST_NAME: "Adkins",
@@ -236,7 +237,7 @@ describe("async test", () => {
 
     const resultProm = myArr.reduceAsync<ExtendedScore[]>(async (acc, cur) => {
       const addOnAttr = await new Promise<string>(resolve =>
-        setTimeout(() => resolve(Date.now().toString(24)), 5)
+        setTimeout(() => resolve("SOMETHING_NEW"), 5)
       );
 
       (cur as ExtendedScore).fetchedAttr = addOnAttr;
@@ -248,6 +249,7 @@ describe("async test", () => {
     expect(resultProm).property("catch");
     const result = await resultProm;
     expect(result[0]).property("fetchedAttr");
+    expect(result[0].fetchedAttr).equal("SOMETHING_NEW");
   });
 });
 
@@ -267,5 +269,29 @@ describe("findAndReplace", () => {
 
     expect(myArr.find(x => x.index === 5).id).equal("adasdasd");
     expect(oldScore.id).equal("5f5f24b8b804f4ead7b82da9");
+  });
+
+  it("Insert Instead of Replace", () => {
+    myArr.sortByAttr(x => x.index);
+
+    expect(myArr.find(x => x.index === 500)).equal(undefined);
+
+    const oldScore = myArr.findAndReplace(
+      x => x.index === 500,
+      ({
+        index: 500,
+        name: {
+          first: "newNickName",
+          last: "newLastName"
+        },
+        age: 5,
+        id: "adasdasd"
+      } as unknown) as Score,
+      true
+    );
+
+    expect(myArr.find(x => x.index === 500).id).equal("adasdasd");
+    expect(oldScore).equal(null);
+    expect(myArr.length).equal(ASSERTIONS.ARRAY_LENGTH + 1);
   });
 });
