@@ -72,7 +72,11 @@ interface Array<T> {
    * const averageScore = [1,2,3].average(); // returns 2
    * ```
    */
-  average(callbackfn?: (value: T) => number, thisArg?: any[]): number;
+  average(
+    callbackfn?: (value: T) => number,
+    roundNum?: number | null,
+    thisArg?: any[]
+  ): number;
 
   /**
    * Shorthand for finding element with minimum value of an attribute.

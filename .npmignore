@@ -1,4 +1,4 @@
-*.ts
-!*.d.ts
+src
 .github
 tests
+tsconfig.json
