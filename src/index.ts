@@ -43,7 +43,8 @@ Array.prototype.average = function (
 ) {
   if (thisArg.length <= 0) throw Error("Out of bounds");
   if (round !== null) {
-    const roundInTens = Number(`1e${round}`);
+    if (round <= 0) throw Error("Out of bounds");
+    const roundInTens = 10 ** round;
     return (
       Math.round((thisArg.sum(func, thisArg) / thisArg.length) * roundInTens) /
       roundInTens
