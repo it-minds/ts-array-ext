@@ -68,7 +68,7 @@ describe("sort", function () {
   });
 
   it("ASC by string with num", function () {
-    let result = myArr.sortByAttr(a => a.name.first);
+    let result = myArr.sortByAttr(a => a.name.first, 0);
 
     expect(result[0].name.first).equal(ASSERTIONS.LOWEST_NAME);
     expect(result[myArr.length - 1].name.first).equal(ASSERTIONS.HIGHEST_NAME);
