@@ -1,3 +1,5 @@
+import { Exception_FindReplaceIllegalAction, Exception_OutOfBounds } from "./customErrors";
+import { isFunction } from "./typeGuards";
 import "./types";
 /// <reference path="types.d.ts" />
 
@@ -41,9 +43,9 @@ Array.prototype.average = function (
   round = null,
   thisArg = this
 ) {
-  if (thisArg.length <= 0) throw Error("Out of bounds");
+  if (thisArg.length <= 0) throw new Exception_OutOfBounds();
   if (round !== null) {
-    if (round < 0) throw Error("Out of bounds");
+    if (round < 0) throw new Exception_OutOfBounds();
     const roundInTens = 10 ** round;
     return (
       Math.round((thisArg.sum(func, thisArg) / thisArg.length) * roundInTens) /
@@ -90,7 +92,7 @@ Array.prototype.chunkByCount = function (
   forceFairness = false,
   thisArg = this
 ) {
-  if (chunkCount <= 0) throw Error("Out of bounds");
+  if (chunkCount <= 0) throw new Exception_OutOfBounds();
 
   const result: any[][] = [];
   for (let i = chunkCount; i > 0; i--) {
@@ -112,7 +114,7 @@ Array.prototype.chunkBySize = function (
   treatChunkSizeAsMax = false,
   thisArg = this
 ) {
-  if (chunkSize <= 0) throw Error("Out of bounds");
+  if (chunkSize <= 0) throw new Exception_OutOfBounds();
   const result: any[][] = [];
 
   if (forceFairness) {
@@ -155,9 +157,9 @@ Array.prototype.chunkBySize = function (
   return result;
 };
 
-Array.prototype.findAndReplace = function (
-  predicate,
-  replaceVal,
+Array.prototype.findAndReplace = function <T extends Object>(
+  predicate: (value: T, index: number, obj: T[]) => boolean,
+  replaceVal: T | ((t?: T) => T),
   addIfNotFound = false,
   thisArg = this
 ) {
@@ -166,11 +168,22 @@ Array.prototype.findAndReplace = function (
     if (!addIfNotFound) {
       return null;
     }
-    thisArg.push(replaceVal);
+
+    if (isFunction(replaceVal)) {
+      throw new Exception_FindReplaceIllegalAction();
+    } else {
+      thisArg.push(replaceVal);
+    }
     return null;
   }
   const oldItem = thisArg[oldIndex];
-  thisArg[oldIndex] = replaceVal;
+
+  if (isFunction(replaceVal)) {
+    thisArg[oldIndex] = replaceVal(thisArg[oldIndex]);
+  } else {
+    thisArg[oldIndex] = replaceVal;
+  }
+
   return oldItem;
 };
 

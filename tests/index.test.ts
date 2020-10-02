@@ -1,34 +1,12 @@
 import "../src/index";
-import { expect } from "chai";
+import { assert, expect } from "chai";
 import { describe } from "mocha";
 
-type Score = {
-  id: string;
-  index: number;
-  isActive: boolean;
-  balance: string;
-  picture: string;
-  age: number;
-  name: {
-    first: string;
-    last: string;
-  };
-  email: string;
-  phone: string;
-  registered: string;
-  latitude: string; //maybe number
-  longitude: string; //maybe number
-  tags: string[];
-  friends: {
-    id: number;
-    name: string;
-  }[];
-  greeting: string;
-  favoriteFruit: string;
-};
-
-import * as data from "./test.data.json";
-const myArr: Score[] = data;
+import {
+  assertErrorType,
+  Exception_FindReplaceIllegalAction
+} from "../src/customErrors";
+import { myArr, Score } from "./testData";
 
 const ASSERTIONS = {
   ARRAY_LENGTH: 17,
@@ -298,5 +276,48 @@ describe("findAndReplace", () => {
     expect(myArr.find(x => x.index === 500).id).equal("adasdasd");
     expect(oldScore).equal(null);
     expect(myArr.length).equal(ASSERTIONS.ARRAY_LENGTH + 1);
+  });
+
+  it("findReplace functions", () => {
+    myArr.findAndReplace(
+      x => x.index === 500,
+      x => {
+        x.id = "123456";
+        return x;
+      }
+    );
+
+    expect(myArr.find(x => x.index === 500).id).equal("123456");
+  });
+
+  it("findReplace functions for not found", () => {
+    myArr.findAndReplace(
+      x => x.index === 50000,
+      x => {
+        x.id = "123456";
+        return x;
+      }
+    );
+
+    expect(myArr.find(x => x.index === 50000)).equal(undefined);
+  });
+
+  it("illegal action findReplace functions for not found and insert", () => {
+    try {
+      myArr.findAndReplace(
+        x => x.index === 50000,
+        x => x,
+        true
+      );
+
+      assert(
+        false,
+        "This function didn't throw error like it was expected to."
+      );
+    } catch (err) {
+      assertErrorType(err, Exception_FindReplaceIllegalAction);
+
+      expect(err.constructor.name).equal("Exception_FindReplaceIllegalAction");
+    }
   });
 });
