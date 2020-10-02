@@ -1,4 +1,6 @@
-/// <reference path="array.d.ts"/>
+import "./types";
+/// <reference path="types.d.ts" />
+
 Array.prototype.sortByAttr = function (
   func = x => x,
   sortDirection = SortDirection.ASC,
@@ -34,8 +36,20 @@ Array.prototype.sum = function (func = x => x, thisArg = this) {
   return thisArg.reduce<number>((acc, t: any) => acc + func(t), 0);
 };
 
-Array.prototype.average = function (func = x => x, thisArg = this) {
+Array.prototype.average = function (
+  func = x => x,
+  round = null,
+  thisArg = this
+) {
   if (thisArg.length <= 0) throw Error("Out of bounds");
+  if (round !== null) {
+    if (round < 0) throw Error("Out of bounds");
+    const roundInTens = 10 ** round;
+    return (
+      Math.round((thisArg.sum(func, thisArg) / thisArg.length) * roundInTens) /
+      roundInTens
+    );
+  }
   return thisArg.sum(func, thisArg) / thisArg.length;
 };
 
@@ -50,9 +64,9 @@ Array.prototype.max = function (func = x => x, thisArg = this) {
 Array.prototype.shuffle = function (thisArg = this) {
   return thisArg
     .map(val => ({
-      sort:
-        Math.floor(Math.pow(10, 14) * Math.random() * Math.random()) %
-        (thisArg.length * 100),
+      //This magical random is considered more random than the standard Math.random().
+      //https://stackoverflow.com/a/59735724/6103188
+      sort: Math.floor(1e14 * Math.random() ** 2) % (thisArg.length * 100),
       val
     }))
     .sortByAttr(x => x.sort)
@@ -144,10 +158,17 @@ Array.prototype.chunkBySize = function (
 Array.prototype.findAndReplace = function (
   predicate,
   replaceVal,
+  addIfNotFound = false,
   thisArg = this
 ) {
   const oldIndex = thisArg.findIndex(predicate);
-  if (oldIndex === -1) return null;
+  if (oldIndex === -1) {
+    if (!addIfNotFound) {
+      return null;
+    }
+    thisArg.push(replaceVal);
+    return null;
+  }
   const oldItem = thisArg[oldIndex];
   thisArg[oldIndex] = replaceVal;
   return oldItem;

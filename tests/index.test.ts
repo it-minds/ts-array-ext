@@ -1,154 +1,181 @@
-import "../index";
+import "../src/index";
 import { expect } from "chai";
 import { describe } from "mocha";
 
 type Score = {
-  id: number;
-  userId: number;
-  score: number;
-  nickName: string;
+  id: string;
+  index: number;
+  isActive: boolean;
+  balance: string;
+  picture: string;
+  age: number;
+  name: {
+    first: string;
+    last: string;
+  };
+  email: string;
+  phone: string;
+  registered: string;
+  latitude: string; //maybe number
+  longitude: string; //maybe number
+  tags: string[];
+  friends: {
+    id: number;
+    name: string;
+  }[];
+  greeting: string;
+  favoriteFruit: string;
 };
 
-const myArr: Score[] = [
-  { id: 1, userId: 1, score: 1000, nickName: "aa" },
-  { id: 3, userId: 2, score: 200, nickName: "bb" },
-  { id: 5, userId: 1, score: 150, nickName: "ba" },
-  { id: 2, userId: 2, score: 999, nickName: "zx" },
-  { id: 4, userId: 2, score: 200, nickName: "ce" }
-];
+import * as data from "./test.data.json";
+const myArr: Score[] = data;
+
+const ASSERTIONS = {
+  ARRAY_LENGTH: 17,
+  MAX_AGE: 49,
+  MIN_AGE: 20,
+  LOWEST_NAME: "Adkins",
+  HIGHEST_NAME: "Roxanne"
+};
 
 describe("sort", function () {
   it("ASC with enum", function () {
-    let result = myArr.sortByAttr(a => a.score, SortDirection.ASC);
+    let result = myArr.sortByAttr(a => a.age, SortDirection.ASC);
 
-    expect(result[0].score).equal(150);
-    expect(result[4].score).equal(1000);
+    expect(result[0].age).equal(ASSERTIONS.MIN_AGE);
+    expect(result[myArr.length - 1].age).equal(ASSERTIONS.MAX_AGE);
   });
 
   it("ASC with num", function () {
-    let result = myArr.sortByAttr(a => a.score, 0);
+    let result = myArr.sortByAttr(a => a.age, 0);
 
-    expect(result[0].score).equal(150);
-    expect(result[4].score).equal(1000);
+    expect(result[0].age).equal(ASSERTIONS.MIN_AGE);
+    expect(result[myArr.length - 1].age).equal(ASSERTIONS.MAX_AGE);
   });
 
   it("DESC with enum ", function () {
-    let result = myArr.sortByAttr(a => a.score, SortDirection.DESC);
+    let result = myArr.sortByAttr(a => a.age, SortDirection.DESC);
 
-    expect(result[0].score).equal(1000);
-    expect(result[4].score).equal(150);
+    expect(result[0].age).equal(ASSERTIONS.MAX_AGE);
+    expect(result[myArr.length - 1].age).equal(ASSERTIONS.MIN_AGE);
   });
 
   it("DESC with num", function () {
-    let result = myArr.sortByAttr(a => a.score, 1);
+    let result = myArr.sortByAttr(a => a.age, 1);
 
-    expect(result[0].score).equal(1000);
-    expect(result[4].score).equal(150);
+    expect(result[0].age).equal(ASSERTIONS.MAX_AGE);
+    expect(result[myArr.length - 1].age).equal(ASSERTIONS.MIN_AGE);
   });
 
   it("ASC by string with num", function () {
-    let result = myArr.sortByAttr(a => a.nickName);
+    let result = myArr.sortByAttr(a => a.name.first, 0);
 
-    expect(result[0].score).equal(1000);
-    expect(result[4].score).equal(999);
+    expect(result[0].name.first).equal(ASSERTIONS.LOWEST_NAME);
+    expect(result[myArr.length - 1].name.first).equal(ASSERTIONS.HIGHEST_NAME);
   });
 
   it("DESC by string with num", function () {
-    let result = myArr.sortByAttr(a => a.nickName, 1);
+    let result = myArr.sortByAttr(a => a.name.first, 1);
 
-    expect(result[0].score).equal(999);
-    expect(result[4].score).equal(1000);
+    expect(result[0].name.first).equal(ASSERTIONS.HIGHEST_NAME);
+    expect(result[myArr.length - 1].name.first).equal(ASSERTIONS.LOWEST_NAME);
   });
 
   it("Shuffle Then sort", function () {
     let result = myArr
       .shuffle()
       .shuffle()
-      .sortByAttr(a => a.score);
+      .sortByAttr(a => a.name.first);
 
-    expect(result[0].score).equal(150);
-    expect(result[4].score).equal(1000);
+    expect(result[0].name.first).equal(ASSERTIONS.LOWEST_NAME);
+    expect(result[myArr.length - 1].name.first).equal(ASSERTIONS.HIGHEST_NAME);
   });
 });
 
 describe("shuffle", () => {
-  it("Shuffle Then sort", function () {
+  it("Shuffle 1 mio times and expect results to be close to average", function (done) {
+    this.timeout(5000);
     let roll = 0;
-    let counts: { [k: number]: number } = {};
+    let counts: { [k: string]: number } = {};
 
-    for (let i = 1; i <= 5; i++) {
+    for (let i = 0; i < myArr.length; i++) {
       counts[i] = 0;
     }
 
     while (roll < 1000000) {
       roll++;
-      counts[myArr.shuffle()[0].id]++;
+      //increase the count of the index value of the newly shuffled array.
+      counts[myArr.shuffle()[0].index]++;
     }
 
-    const result = Object.values(counts).filter(x => x > 190000 && x < 210000)
-      .length;
-    expect(result).equal(5);
+    //Check each index value. If it is within the error margin, that index was shuffled randomly.
+    const result = Object.keys(counts).filter(
+      // numbers are derived from the array length (17) with an error margin of 0.2% (2000)
+      // lower: (1,000,000 / 17) round to lowest 2000th = 58000
+      // upper: (1,000,000 / 17) round to highest 2000th = 60000
+      x => counts[x] > 58000 && counts[x] < 60000
+    ).length;
+
+    expect(result).equal(myArr.length);
+    done();
   });
 });
 
-describe("calculate", function () {
+describe("calculate", () => {
   it("sum", function () {
-    let result = myArr.sum(x => x.score);
-    expect(result).equal(2549);
+    let result = myArr.sum(x => x.age);
+    expect(result).equal(613);
   });
 
   it("min", function () {
-    let score = myArr.min(x => x.score);
-    let result = score.score;
-    expect(result).equal(150);
+    let score = myArr.min(x => x.age).age;
+    expect(score).equal(ASSERTIONS.MIN_AGE);
   });
 
   it("max", function () {
-    let score = myArr.max(x => x.score);
-    let result = score.score;
-    expect(result).equal(1000);
+    let score = myArr.max(x => x.age).age;
+    expect(score).equal(ASSERTIONS.MAX_AGE);
   });
 
   it("median", function () {
-    let score = myArr.median(x => x.score);
-    let result = score.score;
-    expect(result).equal(200);
+    let score = myArr.median(x => x.age).age;
+    expect(score).equal(38);
   });
 
   it("avg", function () {
-    let result = myArr.average(x => x.score);
-    expect(result).equal(509.8);
+    let result = myArr.average(x => x.age, 2);
+
+    expect(result).equal(36.06);
   });
 });
 
 describe("groupBy", function () {
   it("groupByUserId", function () {
-    let groups = myArr.groupBy(x => x.userId);
+    let groups = myArr.groupBy(x => x.favoriteFruit);
 
-    expect(Object.keys(groups).length).equal(2);
-    expect(groups[1].length, "User ID 1 should have 2 scores").equal(2);
-    expect(groups[2].length, "User ID 2 should have 3 scores").equal(3);
+    expect(Object.keys(groups).length).equal(4);
   });
 
-  it("groupByThenSum", function () {
+  it("groupByThenCount", function () {
     let groups = myArr.groupBy(
-      x => x.userId,
-      arr => arr.sum(x => x.score)
+      x => x.favoriteFruit,
+      arr => arr.length
     );
 
-    expect(Object.keys(groups).length).equal(2);
-    expect(groups[1]).equal(1150);
-    expect(groups[2]).equal(1399);
+    expect(Object.keys(groups).length).equal(4);
+    expect(groups["banana"], "User ID 1 should have 2 scores").equal(6);
+    expect(groups["apple"], "User ID 2 should have 3 scores").equal(4);
+    expect(groups["strawberry"], "User ID 2 should have 3 scores").equal(2);
+    expect(groups["orange"], "User ID 2 should have 3 scores").equal(5);
   });
 
   it("groupByThenShuffle", function () {
     let groups = myArr.groupBy(
-      x => x.score,
+      x => x.age,
       arr => arr.shuffle()
     );
 
-    expect(Object.keys(groups).length).equal(4);
-    expect(groups[200].length).equal(2);
+    expect(Object.keys(groups).length).equal(14);
   });
 });
 
@@ -233,18 +260,43 @@ describe("async test", () => {
 
 describe("findAndReplace", () => {
   it("single element", () => {
-    const newScore: Score = {
-      id: 5,
-      nickName: "newNickName",
-      score: 5,
-      userId: 55
-    };
+    myArr.sortByAttr(x => x.id);
 
-    const oldScore = myArr
-      .sortByAttr(x => x.id)
-      .findAndReplace(x => x.id === newScore.id, newScore);
+    const oldScore = myArr.findAndReplace(x => x.index === 5, ({
+      index: 5,
+      name: {
+        first: "newNickName",
+        last: "newLastName"
+      },
+      age: 5,
+      id: "adasdasd"
+    } as unknown) as Score);
 
-    expect(myArr[4].nickName).equal("newNickName");
-    expect(oldScore.nickName).equal("ba");
+    expect(myArr.find(x => x.index === 5).id).equal("adasdasd");
+    expect(oldScore.id).equal("5f5f24b8b804f4ead7b82da9");
+  });
+
+  it("Insert Instead of Replace", () => {
+    myArr.sortByAttr(x => x.index);
+
+    expect(myArr.find(x => x.index === 500)).equal(undefined);
+
+    const oldScore = myArr.findAndReplace(
+      x => x.index === 500,
+      ({
+        index: 500,
+        name: {
+          first: "newNickName",
+          last: "newLastName"
+        },
+        age: 5,
+        id: "adasdasd"
+      } as unknown) as Score,
+      true
+    );
+
+    expect(myArr.find(x => x.index === 500).id).equal("adasdasd");
+    expect(oldScore).equal(null);
+    expect(myArr.length).equal(ASSERTIONS.ARRAY_LENGTH + 1);
   });
 });

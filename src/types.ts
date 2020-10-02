@@ -72,7 +72,11 @@ interface Array<T> {
    * const averageScore = [1,2,3].average(); // returns 2
    * ```
    */
-  average(callbackfn?: (value: T) => number, thisArg?: any[]): number;
+  average(
+    callbackfn?: (value: T) => number,
+    roundNum?: number | null,
+    thisArg?: any[]
+  ): number;
 
   /**
    * Shorthand for finding element with minimum value of an attribute.
@@ -168,15 +172,25 @@ interface Array<T> {
   /**
    * Given a predicate of finding an element and another element to take its place.
    * Mutates the array and returns the found (old) element.
+   * If no element is found using the predicate the new element will not be added to the array, except if the addIfNotFound arg is true.
+   *
+   * @param addIfNotFound If true, the new element will be added at the end of the array, if the old element wasn't found.
    *
    * Example:
    * ```typescript
    * const oldElement = myArr.findAndReplace(x => x.score === 100, new Score())
    * ```
+   *
+   * Example: User is added, if it doesn't already exist.
+   * ```typescript
+   * const user = {id: 2, name: "Paul"};
+   * const oldElement = myArr.findAndReplace(x => x.id === 2, user, true);
+   * ```
    */
   findAndReplace(
     predicate: (value: T, index: number, obj: T[]) => boolean,
     replaceVal: T,
+    addIfNotFound?: boolean,
     thisArg?: any[]
   ): T;
 
