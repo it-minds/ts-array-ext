@@ -1,6 +1,5 @@
 /**
- * 
- *
+ * This is a base class used only to wrap a few required attributes away from each custom exception
  */
 class BaseException extends Error {
   readonly _e = true;
@@ -59,8 +58,16 @@ interface ClassBuilder<T = BaseException> {
  * Assert and type guard input error to be one of the custom Error types.
  * The asserted type is derived from the second parameter.
  *
- * @param err : instance of the error to assert and type guard
- * @param errorClass : Static class input of a custom Error
+ * Example:
+ * ```typescript
+ * try { ... } catch (err) {
+ *   assertErrorType(err, Exception_FindReplaceIllegalAction);
+ *   // err is now typed as Exception_FindReplaceIllegalAction
+ * }
+ * ```
+ *
+ * @param err instance of the error to assert and type guard
+ * @param errorClass Static class input of a custom Error
  */
 export function assertErrorType<T extends BaseException>(
   err: BaseException,
