@@ -15,7 +15,7 @@
     "typescript"
   ],
   "author": "Martin Johannesson <mjh@it-minds.dk>",
-  "license": " MPL-2.0",
+  "license": "MPL-2.0",
   "devDependencies": {
     "@types/chai": "^4.2.12",
     "@types/mocha": "^8.0.3",
