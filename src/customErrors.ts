@@ -31,7 +31,7 @@ export class Exception_FindReplaceIllegalAction extends BaseException {
 }
 
 /**
- * This is ~~black magic~~ a helper type fow declaring static variables to be present on the type of a static input.
+ * This is ~~black magic~~ a helper type for declaring static variables to be present on the type of a static input.
  *
  * Say you want to put in the class declaration and not an instance of the class, this interface wraps this
  * and provides a required typed constructor.
@@ -39,13 +39,13 @@ export class Exception_FindReplaceIllegalAction extends BaseException {
  * Example:
  * ```typescript
  *
- * const myMethod = (input: ClassBuilder) {
+ * const myMethod = (input: ClassBuilder) => {
  *    console.log(input.key)
  * }
  *
- * myMethod(BaseError) //gives error `Property 'key' is missing in type 'typeof BaseError' but required in type 'ClassBuilder<BaseError>'`
+ * myMethod(BaseError) // Gives type error `Property 'key' is missing in type 'typeof BaseError' but required in type 'ClassBuilder<BaseError>'`
  *
- * myMethod(OutOfBounds) //OK
+ * myMethod(OutOfBounds) // OK
  * ```
  */
 interface ClassBuilder<T = BaseException> {
@@ -80,4 +80,26 @@ export function assertErrorType<T extends BaseException>(
   if (err.key !== errorClass.key) {
     throw Error("Not the same error type");
   }
+}
+
+/**
+ * Custom type guard of the exception classes.
+ *
+ * Example:
+ * ```typescript
+* try { ... } catch (err) {
+ *   if (isErrorType(err, Exception_FindReplaceIllegalAction)) {
+ *      // err is now typed as Exception_FindReplaceIllegalAction
+ *   }
+ * }
+ * ```
+ *
+ * @param err instance of the error to type guard
+ * @param errorClass Static class input of a custom Error
+ */
+export function isErrorType<T extends BaseException>(
+  err: BaseException,
+  errorClass: ClassBuilder<T>
+): err is T {
+  return err._e === true && err.key === errorClass.key;
 }
