@@ -16,7 +16,7 @@ Fast <b><2kB</b> alternative to Lodash with a modern API</p>
 - 🧠 Familiar LINQ API & patterns
 - 💪 Immutable
 - 🔥 Chainable
-- 📦 <2kb mini library
+- 📦 <2kB mini library
 - 👫 All browsers supported
 
 ---
