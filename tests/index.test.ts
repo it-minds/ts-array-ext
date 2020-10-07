@@ -305,6 +305,8 @@ describe("unionSplit", () => {
       (a, b) => a.favoriteFruit === b
     );
 
-    console.log("unionSplit", result);
+    expect(result.rightSplit.length).equal(1);
+    expect(result.innerJoin.length).equal(7);
+    expect(result.leftSplit.length).equal(11);
   });
 });
