@@ -2,10 +2,7 @@ import "../src/index";
 import { assert, expect } from "chai";
 import { describe } from "mocha";
 
-import {
-  assertErrorType,
-  Exception_FindReplaceIllegalAction
-} from "../src/customErrors";
+import { assertErrorType, Exception_FindReplaceIllegalAction } from "../src/customErrors";
 import { myArr, Score } from "./testData";
 
 const ASSERTIONS = {
@@ -310,10 +307,7 @@ describe("findAndReplace", () => {
         true
       );
 
-      assert(
-        false,
-        "This function didn't throw error like it was expected to."
-      );
+      assert(false, "This function didn't throw error like it was expected to.");
     } catch (err) {
       assertErrorType(err, Exception_FindReplaceIllegalAction);
 
