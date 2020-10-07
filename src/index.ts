@@ -1,4 +1,7 @@
-import { Exception_FindReplaceIllegalAction, Exception_OutOfBounds } from "./customErrors";
+import {
+  Exception_FindReplaceIllegalAction,
+  Exception_OutOfBounds
+} from "./customErrors";
 import { isFunction } from "./typeGuards";
 import "./types";
 /// <reference path="types.d.ts" />
@@ -194,4 +197,8 @@ Array.prototype.reduceAsync = function (callback, initialVal, thisArg = this) {
   }, Promise.resolve(initialVal));
 
   return prom;
+};
+
+Array.prototype.flatten = function (pred, thisArg = this) {
+  return thisArg.reduce<any[]>((acc, v) => [...acc, ...pred(v)], []);
 };

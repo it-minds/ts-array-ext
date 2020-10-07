@@ -222,4 +222,9 @@ interface Array<T> {
     initialVal: U,
     thisArg?: any[]
   ): Promise<U>;
+
+  // TODO docs
+  // TODO test case
+  // TODO Readme example
+  flatten<U>(pred: (t: T) => U[], thisArg?: any[]): U[];
 }
