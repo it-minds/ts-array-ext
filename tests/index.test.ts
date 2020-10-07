@@ -300,3 +300,18 @@ describe("findAndReplace", () => {
     expect(myArr.length).equal(ASSERTIONS.ARRAY_LENGTH + 1);
   });
 });
+
+describe("unionSplit", () => {
+  const fruitsToCheck = ["banana", "strawberry", "lemon"];
+
+  it("Who's fruit is it?", () => {
+    const result = myArr.unionSplit(
+      fruitsToCheck,
+      (a, b) => a.favoriteFruit === b
+    );
+
+    expect(result.rightSplit.length).equal(1);
+    expect(result.innerJoin.length).equal(7);
+    expect(result.leftSplit.length).equal(11);
+  });
+});
