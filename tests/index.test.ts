@@ -306,7 +306,6 @@ describe("findAndReplace", () => {
         x => x,
         true
       );
-
       assert(false, "This function didn't throw error like it was expected to.");
     } catch (err) {
       assertErrorType(err, Exception_FindReplaceIllegalAction);
