@@ -4,12 +4,10 @@
     "target": "es6",
     "lib": ["dom", "es2017"],
     "rootDirs": ["src", "tests"],
-    "sourceMap": true,
     "strict": false,
     "noImplicitAny": true,
     "declaration": true,
     "outDir": "build",
-    "declarationMap": true,
     "resolveJsonModule": true
   },
   "include": ["src/**/*.ts"],

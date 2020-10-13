@@ -87,7 +87,7 @@ export function assertErrorType<T extends BaseException>(
  *
  * Example:
  * ```typescript
-* try { ... } catch (err) {
+ * try { ... } catch (err) {
  *   if (isErrorType(err, Exception_FindReplaceIllegalAction)) {
  *      // err is now typed as Exception_FindReplaceIllegalAction
  *   }
