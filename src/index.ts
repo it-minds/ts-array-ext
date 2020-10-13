@@ -1,6 +1,7 @@
+import "./types";
+
 import { Exception_FindReplaceIllegalAction, Exception_OutOfBounds } from "./customErrors";
 import { isFunction } from "./typeGuards";
-import "./types";
 /// <reference path="types.d.ts" />
 
 Array.prototype.sortByAttr = function (
@@ -131,7 +132,7 @@ Array.prototype.chunkBySize = function (
   return result;
 };
 
-Array.prototype.findAndReplace = function <T extends Object>(
+Array.prototype.findAndReplace = function <T extends unknown>(
   predicate: (value: T, index: number, obj: T[]) => boolean,
   replaceVal: T | ((t?: T) => T),
   addIfNotFound = false,
@@ -171,12 +172,8 @@ Array.prototype.reduceAsync = function (callback, initialVal, thisArg = this) {
 };
 
 Array.prototype.unionSplit = function (secondArr, comparator, thisArg = this) {
-  const leftSplit = thisArg.filter(t =>
-    secondArr.every(u => !comparator(t, u))
-  );
-  const rightSplit = secondArr.filter(u =>
-    thisArg.every(t => !comparator(t, u))
-  );
+  const leftSplit = thisArg.filter(t => secondArr.every(u => !comparator(t, u)));
+  const rightSplit = secondArr.filter(u => thisArg.every(t => !comparator(t, u)));
 
   const innerJoin = thisArg.filter(t => secondArr.some(u => comparator(t, u)));
 
