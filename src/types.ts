@@ -205,4 +205,14 @@ interface Array<T> {
     initialVal: U,
     thisArg?: any[]
   ): Promise<U>;
+
+  unionSplit<U = T>(
+    secondArr: Array<U>,
+    comparator: (a: T, b: U) => boolean,
+    thisArg?: any[]
+  ): {
+    leftSplit: T[];
+    rightSplit: U[];
+    innerJoin: T[];
+  };
 }
