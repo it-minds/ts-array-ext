@@ -18,7 +18,8 @@
   "author": "IT Minds Opensource <opensource@it-minds.dk> (<it-minds.dk>)",
   "contributors": [
     "Martin Johannesson <mjh@it-minds.dk>",
-    "Phillip Phoelich <pph@it-minds.dk>"
+    "Phillip Phoelich <pph@it-minds.dk>",
+    "Jeppe Trip Kofoed <jtk@it-minds.dk>"
   ],
   "license": "MPL-2.0",
   "devDependencies": {
