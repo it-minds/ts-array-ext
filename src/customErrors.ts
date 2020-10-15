@@ -22,7 +22,7 @@ export class Exception_OutOfBounds extends BaseException {
 
 export class Exception_FindReplaceIllegalAction extends BaseException {
   static defaultMessage =
-    "Action not allowed. Both addIfNotFound and replaceVal as a function isn't allowed.";
+    "Action not allowed. addIfNotFound and replaceVal as a function isn't allowed at the same time.";
   static key = "find_replace_illegal_action";
 
   constructor(msg = Exception_FindReplaceIllegalAction.defaultMessage) {
