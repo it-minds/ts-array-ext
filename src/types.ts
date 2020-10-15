@@ -1,7 +1,4 @@
-declare const enum SortDirection {
-  ASC = 0,
-  DESC = 1
-}
+type SortDirection = "ASC" | "DESC";
 
 interface Array<T> {
   /**
@@ -10,10 +7,8 @@ interface Array<T> {
    * Example
    * ```typescript
    * const lowestFirst = myArr.SortByArg(x => x.score);
-   * const lowestFirst = myArr.SortByArg(x => x.score, SortDirection.ASC);
    * const lowestFirst = myArr.SortByArg(x => x.score, 0);
    *
-   * const highestFirst = myArr.SortByArg(x => x.score, SortDirection.DESC);
    * const highestFirst = myArr.SortByArg(x => x.score, 1);
    * ```
    */
@@ -72,11 +67,7 @@ interface Array<T> {
    * const averageScore = [1,2,3].average(); // returns 2
    * ```
    */
-  average(
-    callbackfn?: (value: T) => number,
-    roundNum?: number | null,
-    thisArg?: any[]
-  ): number;
+  average(callbackfn?: (value: T) => number, roundNum?: number | null, thisArg?: any[]): number;
 
   /**
    * Shorthand for finding element with minimum value of an attribute.
@@ -117,11 +108,7 @@ interface Array<T> {
    * const medianScore = myArr.median(x => x.score, -1);
    * ```
    */
-  median(
-    callbackfn?: (value: T) => number,
-    tieBreaker?: -1 | 1,
-    thisArg?: any[]
-  ): T;
+  median(callbackfn?: (value: T) => number, tieBreaker?: -1 | 1, thisArg?: any[]): T;
 
   /**
    * Split an array into X amount of chunks.
@@ -136,11 +123,7 @@ interface Array<T> {
    * //If the arr contains 21 elements, the 21st element wont be part of the result here.
    * ```
    */
-  chunkByCount(
-    chunkCount: number,
-    forceFairness?: boolean,
-    thisArg?: any[]
-  ): T[][];
+  chunkByCount(chunkCount: number, forceFairness?: boolean, thisArg?: any[]): T[][];
 
   /**
    * Split an array into an amount of chunks depending on size.
@@ -213,12 +196,7 @@ interface Array<T> {
    * ```
    */
   reduceAsync<U = T>(
-    callbackfn: (
-      previousValue: U,
-      currentValue: T,
-      currentIndex: number,
-      array: T[]
-    ) => Promise<U>,
+    callbackfn: (previousValue: U, currentValue: T, currentIndex: number, array: T[]) => Promise<U>,
     initialVal: U,
     thisArg?: any[]
   ): Promise<U>;
