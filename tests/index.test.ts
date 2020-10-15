@@ -7,55 +7,55 @@ import { assertErrorType, Exception_FindReplaceIllegalAction } from "../src/cust
 import { myArr, Score } from "./testData";
 
 const ASSERTIONS = {
-    ARRAY_LENGTH: 17,
-    MAX_AGE: 49,
-    MIN_AGE: 20,
-    LOWEST_NAME: "Adkins",
-    HIGHEST_NAME: "Roxanne"
+  ARRAY_LENGTH: 17,
+  MAX_AGE: 49,
+  MIN_AGE: 20,
+  LOWEST_NAME: "Adkins",
+  HIGHEST_NAME: "Roxanne"
 };
 
 describe("sort", function () {
   it("ASC with default value", function () {
     const result = myArr.sortByAttr(a => a.age);
 
-        expect(result[0].age).equal(ASSERTIONS.MIN_AGE);
-        expect(result[myArr.length - 1].age).equal(ASSERTIONS.MAX_AGE);
-    });
+    expect(result[0].age).equal(ASSERTIONS.MIN_AGE);
+    expect(result[myArr.length - 1].age).equal(ASSERTIONS.MAX_AGE);
+  });
 
   it("ASC with direction", function () {
     const result = myArr.sortByAttr(a => a.age, "ASC");
 
-        expect(result[0].age).equal(ASSERTIONS.MIN_AGE);
-        expect(result[myArr.length - 1].age).equal(ASSERTIONS.MAX_AGE);
-    });
+    expect(result[0].age).equal(ASSERTIONS.MIN_AGE);
+    expect(result[myArr.length - 1].age).equal(ASSERTIONS.MAX_AGE);
+  });
 
   it("DESC with direction", function () {
     const result = myArr.sortByAttr(a => a.age, "DESC");
 
-        expect(result[0].age).equal(ASSERTIONS.MAX_AGE);
-        expect(result[myArr.length - 1].age).equal(ASSERTIONS.MIN_AGE);
-    });
+    expect(result[0].age).equal(ASSERTIONS.MAX_AGE);
+    expect(result[myArr.length - 1].age).equal(ASSERTIONS.MIN_AGE);
+  });
 
   it("ASC by string with direction", function () {
     const result = myArr.sortByAttr(a => a.name.first, "ASC");
 
-        expect(result[0].name.first).equal(ASSERTIONS.LOWEST_NAME);
-        expect(result[myArr.length - 1].name.first).equal(ASSERTIONS.HIGHEST_NAME);
-    });
+    expect(result[0].name.first).equal(ASSERTIONS.LOWEST_NAME);
+    expect(result[myArr.length - 1].name.first).equal(ASSERTIONS.HIGHEST_NAME);
+  });
 
   it("DESC by string with direction", function () {
     const result = myArr.sortByAttr(a => a.name.first, "DESC");
 
-        expect(result[0].name.first).equal(ASSERTIONS.HIGHEST_NAME);
-        expect(result[myArr.length - 1].name.first).equal(ASSERTIONS.LOWEST_NAME);
-    });
+    expect(result[0].name.first).equal(ASSERTIONS.HIGHEST_NAME);
+    expect(result[myArr.length - 1].name.first).equal(ASSERTIONS.LOWEST_NAME);
+  });
 
   it("Shuffle Then sort", function () {
     const result = myArr.shuffle().sortByAttr(a => a.name.first);
 
-        expect(result[0].name.first).equal(ASSERTIONS.LOWEST_NAME);
-        expect(result[myArr.length - 1].name.first).equal(ASSERTIONS.HIGHEST_NAME);
-    });
+    expect(result[0].name.first).equal(ASSERTIONS.LOWEST_NAME);
+    expect(result[myArr.length - 1].name.first).equal(ASSERTIONS.HIGHEST_NAME);
+  });
 });
 
 describe("shuffle", () => {
@@ -151,77 +151,77 @@ describe("chunk", function () {
   it("chunkByCount", function () {
     const groups = baseArr.chunkByCount(3);
 
-        expect(groups[0].length).equal(6);
-        expect(groups[1].length).equal(6);
-        expect(groups[2].length).equal(5);
-    });
+    expect(groups[0].length).equal(6);
+    expect(groups[1].length).equal(6);
+    expect(groups[2].length).equal(5);
+  });
 
   it("chunkByCountFair", function () {
     const groups = baseArr.chunkByCount(3, true);
 
-        expect(groups[0].length).equal(5);
-        expect(groups[1].length).equal(5);
-        expect(groups[2].length).equal(5);
-    });
+    expect(groups[0].length).equal(5);
+    expect(groups[1].length).equal(5);
+    expect(groups[2].length).equal(5);
+  });
 
   it("chunkBySize", function () {
     const groups = baseArr.chunkBySize(7);
 
-        expect(groups[0].length).equal(7);
-        expect(groups[1].length).equal(7);
-        expect(groups[2].length).equal(3);
-    });
+    expect(groups[0].length).equal(7);
+    expect(groups[1].length).equal(7);
+    expect(groups[2].length).equal(3);
+  });
 
   it("chunkBySizeFairMore", function () {
     const groups = baseArr.chunkBySize(7, true);
 
-        expect(groups[0].length).equal(6);
-        expect(groups[1].length).equal(6);
-        expect(groups[2].length).equal(5);
-    });
+    expect(groups[0].length).equal(6);
+    expect(groups[1].length).equal(6);
+    expect(groups[2].length).equal(5);
+  });
 
-    it("chunkBySizeFairFewer", function () {
-        const baseArr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
+  it("chunkBySizeFairFewer", function () {
+    const baseArr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
 
     const groups = baseArr.chunkBySize(7, true);
 
-        expect(groups[0].length).equal(8);
-        expect(groups[1].length).equal(7);
-    });
+    expect(groups[0].length).equal(8);
+    expect(groups[1].length).equal(7);
+  });
 
-    it("chunkBySizeFairFewerWithMax", function () {
-        const baseArr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
+  it("chunkBySizeFairFewerWithMax", function () {
+    const baseArr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
 
     const groups = baseArr.chunkBySize(7, true, true);
 
-        expect(groups[0].length).equal(5);
-        expect(groups[1].length).equal(5);
-        expect(groups[2].length).equal(5);
-    });
+    expect(groups[0].length).equal(5);
+    expect(groups[1].length).equal(5);
+    expect(groups[2].length).equal(5);
+  });
 });
 
 describe("async test", () => {
-    it("simple reduce", async () => {
-        type ExtendedScore = Score & {
-            fetchedAttr: string;
-        };
+  it("simple reduce", async () => {
+    type ExtendedScore = Score & {
+      fetchedAttr: string;
+    };
 
-        const resultProm = myArr.reduceAsync<ExtendedScore[]>(async (acc, cur) => {
-            const addOnAttr = await new Promise<string>(resolve =>
-                setTimeout(() => resolve("SOMETHING_NEW"), 5)
-            );
+    const resultProm = myArr.reduceAsync<ExtendedScore[]>(async (acc, cur) => {
+      const addOnAttr = await new Promise<string>(resolve =>
+        setTimeout(() => resolve("SOMETHING_NEW"), 5)
+      );
 
-            (cur as ExtendedScore).fetchedAttr = addOnAttr;
+      (cur as ExtendedScore).fetchedAttr = addOnAttr;
 
-            return [...acc, cur as ExtendedScore];
-        }, []);
+      return [...acc, cur as ExtendedScore];
+    }, []);
 
-        expect(resultProm).property("then");
-        expect(resultProm).property("catch");
-        const result = await resultProm;
-        expect(result[0]).property("fetchedAttr");
-        expect(result[0].fetchedAttr).equal("SOMETHING_NEW");
-    });
+    expect(resultProm).property("then");
+    expect(resultProm).property("catch");
+    const result = await resultProm;
+    expect(result[0]).property("fetchedAttr");
+    expect(result[0].fetchedAttr).equal("SOMETHING_NEW");
+  });
 });
 
 describe("findAndReplace", () => {
@@ -319,56 +319,56 @@ describe("unionSplit", () => {
 });
 
 describe("Distinct", () => {
-    it("Only distinct elements.", () => {
-        const arr = ["banana", "strawberry", "lemon"];
-        const res = arr.distinct();
+  it("Only distinct elements.", () => {
+    const arr = ["banana", "strawberry", "lemon"];
+    const res = arr.distinct();
 
-        expect(res.length).equal(3);
-        expect(res).deep.equal(arr);
-    });
+    expect(res.length).equal(3);
+    expect(res).deep.equal(arr);
+  });
 
-    it("Multiple identical elements.", () => {
-        const arr = ["banana", "strawberry", "lemon", "banana", "strawberry", "lemon", "banana", "strawberry", "lemon"];
-        const res = arr.distinct();
+  it("Multiple identical elements.", () => {
+    const arr = ["banana", "strawberry", "lemon", "banana", "strawberry", "lemon", "banana", "strawberry", "lemon"];
+    const res = arr.distinct();
 
-        expect(res.length).equal(3);
-        expect(res).deep.equal(["banana", "strawberry", "lemon"]);
-    });
+    expect(res.length).equal(3);
+    expect(res).deep.equal(["banana", "strawberry", "lemon"]);
+  });
 
-    it("Only distinct objects.", () => {
-        const arr = [
-            { id: 0, fruit: "banana" },
-            { id: 1, fruit: "strawberry" },
-            { id: 2, fruit: "lemon" }
-        ];
-        const res = arr.distinct(x => x.fruit);
+  it("Only distinct objects.", () => {
+    const arr = [
+      { id: 0, fruit: "banana" },
+      { id: 1, fruit: "strawberry" },
+      { id: 2, fruit: "lemon" }
+    ];
+    const res = arr.distinct(x => x.fruit);
 
-        expect(res.length).equal(3);
-        expect(res).deep.equal(arr);
-    });
+    expect(res.length).equal(3);
+    expect(res).deep.equal(arr);
+  });
 
-    it("Multiple identical object attributes.", () => {
-        const arr = [
-            { id: 0, fruit: "banana" },
-            { id: 1, fruit: "strawberry" },
-            { id: 2, fruit: "lemon" },
-            { id: 3, fruit: "lemon" },
-            { id: 4, fruit: "strawberry" },
-            { id: 5, fruit: "lemon" }
-        ];
-        const res = arr.distinct(x => x.fruit);
+  it("Multiple identical object attributes.", () => {
+    const arr = [
+      { id: 0, fruit: "banana" },
+      { id: 1, fruit: "strawberry" },
+      { id: 2, fruit: "lemon" },
+      { id: 3, fruit: "lemon" },
+      { id: 4, fruit: "strawberry" },
+      { id: 5, fruit: "lemon" }
+    ];
+    const res = arr.distinct(x => x.fruit);
 
-        expect(res.length).equal(3);
-        expect(res).deep.equal([{ id: 0, fruit: "banana" },
-        { id: 1, fruit: "strawberry" },
-        { id: 2, fruit: "lemon" }])
-    });
+    expect(res.length).equal(3);
+    expect(res).deep.equal([{ id: 0, fruit: "banana" },
+    { id: 1, fruit: "strawberry" },
+    { id: 2, fruit: "lemon" }])
+  });
 
-    it("Empty", () => {
-        const arr: string[] = [];
-        const res = arr.distinct();
+  it("Empty", () => {
+    const arr: string[] = [];
+    const res = arr.distinct();
 
-        expect(res.length).equal(0);
-        expect(res).deep.equal([]);
-    });
+    expect(res.length).equal(0);
+    expect(res).deep.equal([]);
+  });
 })
