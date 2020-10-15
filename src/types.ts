@@ -232,4 +232,12 @@ interface Array<T> {
     rightSplit: U[];
     innerJoin: T[];
   };
+
+  /**
+   * Produce an array with distinct elements based on a single comparable attribute.
+   */
+  distinct(
+    callbackfn?: (value: T) => string | number | symbol,
+    thisArg?: any[]
+  ): T[]
 }
