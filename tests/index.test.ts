@@ -1,11 +1,9 @@
 import "../src/index";
+
 import { assert, expect } from "chai";
 import { describe } from "mocha";
 
-import {
-  assertErrorType,
-  Exception_FindReplaceIllegalAction
-} from "../src/customErrors";
+import { assertErrorType, Exception_FindReplaceIllegalAction } from "../src/customErrors";
 import { myArr, Score } from "./testData";
 
 const ASSERTIONS = {
@@ -17,53 +15,43 @@ const ASSERTIONS = {
 };
 
 describe("sort", function () {
-  it("ASC with enum", function () {
-    let result = myArr.sortByAttr(a => a.age, SortDirection.ASC);
+  it("ASC with default value", function () {
+    const result = myArr.sortByAttr(a => a.age);
 
     expect(result[0].age).equal(ASSERTIONS.MIN_AGE);
     expect(result[myArr.length - 1].age).equal(ASSERTIONS.MAX_AGE);
   });
 
-  it("ASC with num", function () {
-    let result = myArr.sortByAttr(a => a.age, 0);
+  it("ASC with direction", function () {
+    const result = myArr.sortByAttr(a => a.age, "ASC");
 
     expect(result[0].age).equal(ASSERTIONS.MIN_AGE);
     expect(result[myArr.length - 1].age).equal(ASSERTIONS.MAX_AGE);
   });
 
-  it("DESC with enum ", function () {
-    let result = myArr.sortByAttr(a => a.age, SortDirection.DESC);
+  it("DESC with direction", function () {
+    const result = myArr.sortByAttr(a => a.age, "DESC");
 
     expect(result[0].age).equal(ASSERTIONS.MAX_AGE);
     expect(result[myArr.length - 1].age).equal(ASSERTIONS.MIN_AGE);
   });
 
-  it("DESC with num", function () {
-    let result = myArr.sortByAttr(a => a.age, 1);
-
-    expect(result[0].age).equal(ASSERTIONS.MAX_AGE);
-    expect(result[myArr.length - 1].age).equal(ASSERTIONS.MIN_AGE);
-  });
-
-  it("ASC by string with num", function () {
-    let result = myArr.sortByAttr(a => a.name.first, 0);
+  it("ASC by string with direction", function () {
+    const result = myArr.sortByAttr(a => a.name.first, "ASC");
 
     expect(result[0].name.first).equal(ASSERTIONS.LOWEST_NAME);
     expect(result[myArr.length - 1].name.first).equal(ASSERTIONS.HIGHEST_NAME);
   });
 
-  it("DESC by string with num", function () {
-    let result = myArr.sortByAttr(a => a.name.first, 1);
+  it("DESC by string with direction", function () {
+    const result = myArr.sortByAttr(a => a.name.first, "DESC");
 
     expect(result[0].name.first).equal(ASSERTIONS.HIGHEST_NAME);
     expect(result[myArr.length - 1].name.first).equal(ASSERTIONS.LOWEST_NAME);
   });
 
   it("Shuffle Then sort", function () {
-    let result = myArr
-      .shuffle()
-      .shuffle()
-      .sortByAttr(a => a.name.first);
+    const result = myArr.shuffle().sortByAttr(a => a.name.first);
 
     expect(result[0].name.first).equal(ASSERTIONS.LOWEST_NAME);
     expect(result[myArr.length - 1].name.first).equal(ASSERTIONS.HIGHEST_NAME);
@@ -74,7 +62,7 @@ describe("shuffle", () => {
   it("Shuffle 1 mio times and expect results to be close to average", function (done) {
     this.timeout(5000);
     let roll = 0;
-    let counts: { [k: string]: number } = {};
+    const counts: { [k: string]: number } = {};
 
     for (let i = 0; i < myArr.length; i++) {
       counts[i] = 0;
@@ -101,27 +89,27 @@ describe("shuffle", () => {
 
 describe("calculate", () => {
   it("sum", function () {
-    let result = myArr.sum(x => x.age);
+    const result = myArr.sum(x => x.age);
     expect(result).equal(613);
   });
 
   it("min", function () {
-    let score = myArr.min(x => x.age).age;
+    const score = myArr.min(x => x.age).age;
     expect(score).equal(ASSERTIONS.MIN_AGE);
   });
 
   it("max", function () {
-    let score = myArr.max(x => x.age).age;
+    const score = myArr.max(x => x.age).age;
     expect(score).equal(ASSERTIONS.MAX_AGE);
   });
 
   it("median", function () {
-    let score = myArr.median(x => x.age).age;
+    const score = myArr.median(x => x.age).age;
     expect(score).equal(38);
   });
 
   it("avg", function () {
-    let result = myArr.average(x => x.age, 2);
+    const result = myArr.average(x => x.age, 2);
 
     expect(result).equal(36.06);
   });
@@ -129,13 +117,13 @@ describe("calculate", () => {
 
 describe("groupBy", function () {
   it("groupByUserId", function () {
-    let groups = myArr.groupBy(x => x.favoriteFruit);
+    const groups = myArr.groupBy(x => x.favoriteFruit);
 
     expect(Object.keys(groups).length).equal(4);
   });
 
   it("groupByThenCount", function () {
-    let groups = myArr.groupBy(
+    const groups = myArr.groupBy(
       x => x.favoriteFruit,
       arr => arr.length
     );
@@ -148,7 +136,7 @@ describe("groupBy", function () {
   });
 
   it("groupByThenShuffle", function () {
-    let groups = myArr.groupBy(
+    const groups = myArr.groupBy(
       x => x.age,
       arr => arr.shuffle()
     );
@@ -158,10 +146,10 @@ describe("groupBy", function () {
 });
 
 describe("chunk", function () {
-  let baseArr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
+  const baseArr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
 
   it("chunkByCount", function () {
-    let groups = baseArr.chunkByCount(3);
+    const groups = baseArr.chunkByCount(3);
 
     expect(groups[0].length).equal(6);
     expect(groups[1].length).equal(6);
@@ -169,7 +157,7 @@ describe("chunk", function () {
   });
 
   it("chunkByCountFair", function () {
-    let groups = baseArr.chunkByCount(3, true);
+    const groups = baseArr.chunkByCount(3, true);
 
     expect(groups[0].length).equal(5);
     expect(groups[1].length).equal(5);
@@ -177,7 +165,7 @@ describe("chunk", function () {
   });
 
   it("chunkBySize", function () {
-    let groups = baseArr.chunkBySize(7);
+    const groups = baseArr.chunkBySize(7);
 
     expect(groups[0].length).equal(7);
     expect(groups[1].length).equal(7);
@@ -185,7 +173,7 @@ describe("chunk", function () {
   });
 
   it("chunkBySizeFairMore", function () {
-    let groups = baseArr.chunkBySize(7, true);
+    const groups = baseArr.chunkBySize(7, true);
 
     expect(groups[0].length).equal(6);
     expect(groups[1].length).equal(6);
@@ -195,7 +183,7 @@ describe("chunk", function () {
   it("chunkBySizeFairFewer", function () {
     const baseArr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
 
-    let groups = baseArr.chunkBySize(7, true);
+    const groups = baseArr.chunkBySize(7, true);
 
     expect(groups[0].length).equal(8);
     expect(groups[1].length).equal(7);
@@ -204,7 +192,7 @@ describe("chunk", function () {
   it("chunkBySizeFairFewerWithMax", function () {
     const baseArr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
 
-    let groups = baseArr.chunkBySize(7, true, true);
+    const groups = baseArr.chunkBySize(7, true, true);
 
     expect(groups[0].length).equal(5);
     expect(groups[1].length).equal(5);
@@ -309,11 +297,7 @@ describe("findAndReplace", () => {
         x => x,
         true
       );
-
-      assert(
-        false,
-        "This function didn't throw error like it was expected to."
-      );
+      assert(false, "This function didn't throw error like it was expected to.");
     } catch (err) {
       assertErrorType(err, Exception_FindReplaceIllegalAction);
 
@@ -326,10 +310,7 @@ describe("unionSplit", () => {
   const fruitsToCheck = ["banana", "strawberry", "lemon"];
 
   it("Who's fruit is it?", () => {
-    const result = myArr.unionSplit(
-      fruitsToCheck,
-      (a, b) => a.favoriteFruit === b
-    );
+    const result = myArr.unionSplit(fruitsToCheck, (a, b) => a.favoriteFruit === b);
 
     expect(result.rightSplit.length).equal(1);
     expect(result.innerJoin.length).equal(7);
