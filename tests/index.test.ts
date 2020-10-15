@@ -15,53 +15,43 @@ const ASSERTIONS = {
 };
 
 describe("sort", function () {
-  it("ASC with enum", function () {
-    const result = myArr.sortByAttr(a => a.age, SortDirection.ASC);
+  it("ASC with default value", function () {
+    const result = myArr.sortByAttr(a => a.age);
 
     expect(result[0].age).equal(ASSERTIONS.MIN_AGE);
     expect(result[myArr.length - 1].age).equal(ASSERTIONS.MAX_AGE);
   });
 
-  it("ASC with num", function () {
-    const result = myArr.sortByAttr(a => a.age, 0);
+  it("ASC with direction", function () {
+    const result = myArr.sortByAttr(a => a.age, "ASC");
 
     expect(result[0].age).equal(ASSERTIONS.MIN_AGE);
     expect(result[myArr.length - 1].age).equal(ASSERTIONS.MAX_AGE);
   });
 
-  it("DESC with enum ", function () {
-    const result = myArr.sortByAttr(a => a.age, SortDirection.DESC);
+  it("DESC with direction", function () {
+    const result = myArr.sortByAttr(a => a.age, "DESC");
 
     expect(result[0].age).equal(ASSERTIONS.MAX_AGE);
     expect(result[myArr.length - 1].age).equal(ASSERTIONS.MIN_AGE);
   });
 
-  it("DESC with num", function () {
-    const result = myArr.sortByAttr(a => a.age, 1);
-
-    expect(result[0].age).equal(ASSERTIONS.MAX_AGE);
-    expect(result[myArr.length - 1].age).equal(ASSERTIONS.MIN_AGE);
-  });
-
-  it("ASC by string with num", function () {
-    const result = myArr.sortByAttr(a => a.name.first, 0);
+  it("ASC by string with direction", function () {
+    const result = myArr.sortByAttr(a => a.name.first, "ASC");
 
     expect(result[0].name.first).equal(ASSERTIONS.LOWEST_NAME);
     expect(result[myArr.length - 1].name.first).equal(ASSERTIONS.HIGHEST_NAME);
   });
 
-  it("DESC by string with num", function () {
-    const result = myArr.sortByAttr(a => a.name.first, 1);
+  it("DESC by string with direction", function () {
+    const result = myArr.sortByAttr(a => a.name.first, "DESC");
 
     expect(result[0].name.first).equal(ASSERTIONS.HIGHEST_NAME);
     expect(result[myArr.length - 1].name.first).equal(ASSERTIONS.LOWEST_NAME);
   });
 
   it("Shuffle Then sort", function () {
-    const result = myArr
-      .shuffle()
-      .shuffle()
-      .sortByAttr(a => a.name.first);
+    const result = myArr.shuffle().sortByAttr(a => a.name.first);
 
     expect(result[0].name.first).equal(ASSERTIONS.LOWEST_NAME);
     expect(result[myArr.length - 1].name.first).equal(ASSERTIONS.HIGHEST_NAME);

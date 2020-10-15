@@ -6,7 +6,7 @@
   "types": "build/index.d.ts",
   "scripts": {
     "build": "tsc",
-    "prepare": "tsc && npm run test",
+    "prepare": "npm run build && npm run lint && npm test",
     "test": "mocha -r ts-node/register tests/**/*.test.ts",
     "coverage": "nyc -r lcov -e .ts -x \"*.test.ts\" npm run test",
     "lint": "eslint --fix ."
@@ -16,6 +16,10 @@
     "typescript"
   ],
   "author": "IT Minds Opensource <opensource@it-minds.dk> (<it-minds.dk>)",
+  "contributors": [
+    "Martin Johannesson <mjh@it-minds.dk>",
+    "Phillip Phoelich <pph@it-minds.dk>"
+  ],
   "license": "MPL-2.0",
   "devDependencies": {
     "@types/chai": "^4.2.12",
@@ -38,7 +42,7 @@
   "homepage": "https://github.com/it-minds-opensource/ts-array-ext",
   "bugs": {
     "url": "https://github.com/it-minds-opensource/ts-array-ext/issues",
-    "email": "<opensource@it-minds.dk>"
+    "email": "opensource@it-minds.dk"
   },
   "repository": {
     "type": "git",
@@ -47,7 +51,7 @@
   "private": false,
   "husky": {
     "hooks": {
-      "pre-commit": "npm run lint && npm test"
+      "pre-commit": "npm run build && npm run lint && npm test"
     }
   }
 }

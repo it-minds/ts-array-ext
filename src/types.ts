@@ -1,7 +1,4 @@
-declare const enum SortDirection {
-  ASC = 0,
-  DESC = 1
-}
+type SortDirection = "ASC" | "DESC";
 
 interface Array<T> {
   /**
@@ -10,10 +7,8 @@ interface Array<T> {
    * Example
    * ```typescript
    * const lowestFirst = myArr.SortByArg(x => x.score);
-   * const lowestFirst = myArr.SortByArg(x => x.score, SortDirection.ASC);
    * const lowestFirst = myArr.SortByArg(x => x.score, 0);
    *
-   * const highestFirst = myArr.SortByArg(x => x.score, SortDirection.DESC);
    * const highestFirst = myArr.SortByArg(x => x.score, 1);
    * ```
    */

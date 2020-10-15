@@ -2,17 +2,10 @@ import "./types";
 
 import { Exception_FindReplaceIllegalAction, Exception_OutOfBounds } from "./customErrors";
 import { isFunction } from "./typeGuards";
-/// <reference path="types.d.ts" />
 
-Array.prototype.sortByAttr = function (
-  func = x => x,
-  sortDirection = SortDirection.ASC,
-  thisArg = this
-) {
-  return thisArg.sort((a: any, b: any) => {
-    const varcase = sortDirection === SortDirection.ASC ? 1 : -1;
-    return func(a) > func(b) ? varcase : -varcase;
-  });
+Array.prototype.sortByAttr = function (func = x => x, sortDirection = "ASC", thisArg = this) {
+  const sortVal = sortDirection === "ASC" ? 1 : -1;
+  return thisArg.sort((a: any, b: any) => (func(a) > func(b) ? sortVal : -sortVal));
 };
 
 Array.prototype.groupBy = function (callback, func?, thisArg = this) {
@@ -50,11 +43,11 @@ Array.prototype.average = function (func = x => x, round = null, thisArg = this)
 };
 
 Array.prototype.min = function (func = x => x, thisArg = this) {
-  return thisArg.sortByAttr(func, SortDirection.ASC, thisArg)[0];
+  return thisArg.sortByAttr(func, "ASC", thisArg)[0];
 };
 
 Array.prototype.max = function (func = x => x, thisArg = this) {
-  return thisArg.sortByAttr(func, SortDirection.DESC, thisArg)[0];
+  return thisArg.sortByAttr(func, "DESC", thisArg)[0];
 };
 
 Array.prototype.shuffle = function (thisArg = this) {
@@ -70,7 +63,7 @@ Array.prototype.shuffle = function (thisArg = this) {
 };
 
 Array.prototype.median = function (func = x => x, tieBreaker = -1, thisArg = this) {
-  const sorted = thisArg.sortByAttr(func, SortDirection.ASC, thisArg);
+  const sorted = thisArg.sortByAttr(func, "ASC", thisArg);
   const middle = sorted.length / 2;
   if (Number.isInteger(middle)) return sorted[middle];
 
