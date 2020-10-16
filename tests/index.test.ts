@@ -1,8 +1,13 @@
-import '../src/index'
-import { assertErrorType, Exception_FindReplaceIllegalAction, Exception_OutOfBounds } from "../src/customErrors";
+import "../src/index";
 
+import { assert } from "chai";
+
+import {
+  assertErrorType,
+  Exception_FindReplaceIllegalAction,
+  Exception_OutOfBounds
+} from "../src/customErrors";
 import { myArr, Score } from "./testData";
-import { assert } from 'chai';
 
 const ASSERTIONS = {
   ARRAY_LENGTH: 17,
@@ -115,12 +120,12 @@ describe("calculate", () => {
     const empty: Score[] = [];
 
     expect(() => {
-      myArr.average(x => x.age, -1)
+      myArr.average(x => x.age, -1);
     }).toThrow(Exception_OutOfBounds);
     expect(() => {
       empty.average(x => x.age, 2);
-    }).toThrow(Exception_OutOfBounds)
-  })
+    }).toThrow(Exception_OutOfBounds);
+  });
 });
 
 describe("groupBy", function () {
@@ -215,15 +220,15 @@ describe("chunk", function () {
     const baseArr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17];
     const groups = baseArr.chunkBySize(2, true);
     expect(() => {
-      baseArr.chunkBySize(0)
+      baseArr.chunkBySize(0);
     }).toThrow(Exception_OutOfBounds);
 
     expect(groups.length).toBe(9);
 
     expect(() => {
-      baseArr.chunkByCount(0)
+      baseArr.chunkByCount(0);
     }).toThrow(Exception_OutOfBounds);
-  })
+  });
 });
 
 describe("async test", () => {

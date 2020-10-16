@@ -2,12 +2,11 @@
 // https://jestjs.io/docs/en/configuration.html
 
 module.exports = {
-
   // A preset that is used as a base for Jest's configuration
-  preset: 'ts-jest',
+  preset: "ts-jest",
 
   // The test environment used for testing
-  testEnvironment: 'node',
+  testEnvironment: "node",
 
   // Indicates whether the coverage information should be collected while executing the test
   collectCoverage: true,
