@@ -1,4 +1,5 @@
 import "./types";
+import "./average";
 
 import { Exception_FindReplaceIllegalAction, Exception_OutOfBounds } from "./customErrors";
 import { isFunction } from "./typeGuards";
@@ -32,15 +33,15 @@ Array.prototype.sum = function (func = x => x, thisArg = this) {
   return thisArg.reduce<number>((acc, t: any) => acc + func(t), 0);
 };
 
-Array.prototype.average = function (func = x => x, round = null, thisArg = this) {
-  if (thisArg.length <= 0) throw new Exception_OutOfBounds();
-  if (round !== null) {
-    if (round < 0) throw new Exception_OutOfBounds();
-    const roundInTens = 10 ** round;
-    return Math.round((thisArg.sum(func, thisArg) / thisArg.length) * roundInTens) / roundInTens;
-  }
-  return thisArg.sum(func, thisArg) / thisArg.length;
-};
+// Array.prototype.average = function (func = x => x, round = null, thisArg = this) {
+//   if (thisArg.length <= 0) throw new Exception_OutOfBounds();
+//   if (round !== null) {
+//     if (round < 0) throw new Exception_OutOfBounds();
+//     const roundInTens = 10 ** round;
+//     return Math.round((thisArg.sum(func, thisArg) / thisArg.length) * roundInTens) / roundInTens;
+//   }
+//   return thisArg.sum(func, thisArg) / thisArg.length;
+// };
 
 Array.prototype.min = function (func = x => x, thisArg = this) {
   return thisArg.sortByAttr(func, "ASC", thisArg)[0];
