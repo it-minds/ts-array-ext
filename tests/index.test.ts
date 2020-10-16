@@ -1,10 +1,8 @@
-import "../src/index";
+import '../src/index'
+import { assertErrorType, Exception_FindReplaceIllegalAction, Exception_OutOfBounds } from "../src/customErrors";
 
-import { assert, expect } from "chai";
-import { describe } from "mocha";
-
-import { assertErrorType, Exception_FindReplaceIllegalAction } from "../src/customErrors";
 import { myArr, Score } from "./testData";
+import { assert } from 'chai';
 
 const ASSERTIONS = {
   ARRAY_LENGTH: 17,
@@ -15,52 +13,51 @@ const ASSERTIONS = {
 };
 
 describe("sort", function () {
-  it("ASC with default value", function () {
+  test("ASC with default value", function () {
     const result = myArr.sortByAttr(a => a.age);
 
-    expect(result[0].age).equal(ASSERTIONS.MIN_AGE);
-    expect(result[myArr.length - 1].age).equal(ASSERTIONS.MAX_AGE);
+    expect(result[0].age).toBe(ASSERTIONS.MIN_AGE);
+    expect(result[myArr.length - 1].age).toBe(ASSERTIONS.MAX_AGE);
   });
 
-  it("ASC with direction", function () {
+  test("ASC with direction", function () {
     const result = myArr.sortByAttr(a => a.age, "ASC");
 
-    expect(result[0].age).equal(ASSERTIONS.MIN_AGE);
-    expect(result[myArr.length - 1].age).equal(ASSERTIONS.MAX_AGE);
+    expect(result[0].age).toBe(ASSERTIONS.MIN_AGE);
+    expect(result[myArr.length - 1].age).toBe(ASSERTIONS.MAX_AGE);
   });
 
-  it("DESC with direction", function () {
+  test("DESC with direction", function () {
     const result = myArr.sortByAttr(a => a.age, "DESC");
 
-    expect(result[0].age).equal(ASSERTIONS.MAX_AGE);
-    expect(result[myArr.length - 1].age).equal(ASSERTIONS.MIN_AGE);
+    expect(result[0].age).toBe(ASSERTIONS.MAX_AGE);
+    expect(result[myArr.length - 1].age).toBe(ASSERTIONS.MIN_AGE);
   });
 
-  it("ASC by string with direction", function () {
+  test("ASC by string with direction", function () {
     const result = myArr.sortByAttr(a => a.name.first, "ASC");
 
-    expect(result[0].name.first).equal(ASSERTIONS.LOWEST_NAME);
-    expect(result[myArr.length - 1].name.first).equal(ASSERTIONS.HIGHEST_NAME);
+    expect(result[0].name.first).toBe(ASSERTIONS.LOWEST_NAME);
+    expect(result[myArr.length - 1].name.first).toBe(ASSERTIONS.HIGHEST_NAME);
   });
 
-  it("DESC by string with direction", function () {
+  test("DESC by string with direction", function () {
     const result = myArr.sortByAttr(a => a.name.first, "DESC");
 
-    expect(result[0].name.first).equal(ASSERTIONS.HIGHEST_NAME);
-    expect(result[myArr.length - 1].name.first).equal(ASSERTIONS.LOWEST_NAME);
+    expect(result[0].name.first).toBe(ASSERTIONS.HIGHEST_NAME);
+    expect(result[myArr.length - 1].name.first).toBe(ASSERTIONS.LOWEST_NAME);
   });
 
-  it("Shuffle Then sort", function () {
+  test("Shuffle Then sort", function () {
     const result = myArr.shuffle().sortByAttr(a => a.name.first);
 
-    expect(result[0].name.first).equal(ASSERTIONS.LOWEST_NAME);
-    expect(result[myArr.length - 1].name.first).equal(ASSERTIONS.HIGHEST_NAME);
+    expect(result[0].name.first).toBe(ASSERTIONS.LOWEST_NAME);
+    expect(result[myArr.length - 1].name.first).toBe(ASSERTIONS.HIGHEST_NAME);
   });
 });
 
 describe("shuffle", () => {
-  it("Shuffle 1 mio times and expect results to be close to average", function (done) {
-    this.timeout(5000);
+  test("Shuffle 1 mio times and expect results to be close to average", function (done) {
     let roll = 0;
     const counts: { [k: string]: number } = {};
 
@@ -82,126 +79,155 @@ describe("shuffle", () => {
       x => counts[x] > 58000 && counts[x] < 60000
     ).length;
 
-    expect(result).equal(myArr.length);
+    expect(result).toBe(myArr.length);
     done();
   });
 });
 
 describe("calculate", () => {
-  it("sum", function () {
+  test("sum", function () {
     const result = myArr.sum(x => x.age);
-    expect(result).equal(613);
+    expect(result).toBe(613);
   });
 
-  it("min", function () {
+  test("min", function () {
     const score = myArr.min(x => x.age).age;
-    expect(score).equal(ASSERTIONS.MIN_AGE);
+    expect(score).toBe(ASSERTIONS.MIN_AGE);
   });
 
-  it("max", function () {
+  test("max", function () {
     const score = myArr.max(x => x.age).age;
-    expect(score).equal(ASSERTIONS.MAX_AGE);
+    expect(score).toBe(ASSERTIONS.MAX_AGE);
   });
 
-  it("median", function () {
+  test("median", function () {
     const score = myArr.median(x => x.age).age;
-    expect(score).equal(38);
+    expect(score).toBe(38);
   });
 
-  it("avg", function () {
+  test("avg", function () {
     const result = myArr.average(x => x.age, 2);
 
-    expect(result).equal(36.06);
+    expect(result).toBe(36.06);
   });
+
+  test("test for caalculation exceptions", function () {
+    const empty: Score[] = [];
+
+    expect(() => {
+      myArr.average(x => x.age, -1)
+    }).toThrow(Exception_OutOfBounds);
+    expect(() => {
+      empty.average(x => x.age, 2);
+    }).toThrow(Exception_OutOfBounds)
+  })
 });
 
 describe("groupBy", function () {
-  it("groupByUserId", function () {
+  test("groupByUserId", function () {
     const groups = myArr.groupBy(x => x.favoriteFruit);
 
-    expect(Object.keys(groups).length).equal(4);
+    expect(Object.keys(groups).length).toBe(4);
   });
 
-  it("groupByThenCount", function () {
+  test("groupByThenCount", function () {
     const groups = myArr.groupBy(
       x => x.favoriteFruit,
       arr => arr.length
     );
 
-    expect(Object.keys(groups).length).equal(4);
-    expect(groups["banana"], "User ID 1 should have 2 scores").equal(6);
-    expect(groups["apple"], "User ID 2 should have 3 scores").equal(4);
-    expect(groups["strawberry"], "User ID 2 should have 3 scores").equal(2);
-    expect(groups["orange"], "User ID 2 should have 3 scores").equal(5);
+    expect(Object.keys(groups).length).toBe(4);
+    //"User ID 1 should have 2 scores"
+    expect(groups["banana"]).toBe(6);
+    //"User ID 2 should have 3 scores"
+    expect(groups["apple"]).toBe(4);
+    //"User ID 2 should have 3 scores"
+    expect(groups["strawberry"]).toBe(2);
+    //"User ID 2 should have 3 scores"
+    expect(groups["orange"]).toBe(5);
   });
 
-  it("groupByThenShuffle", function () {
+  test("groupByThenShuffle", function () {
     const groups = myArr.groupBy(
       x => x.age,
       arr => arr.shuffle()
     );
 
-    expect(Object.keys(groups).length).equal(14);
+    expect(Object.keys(groups).length).toBe(14);
   });
 });
 
 describe("chunk", function () {
   const baseArr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
 
-  it("chunkByCount", function () {
+  test("chunkByCount", function () {
     const groups = baseArr.chunkByCount(3);
 
-    expect(groups[0].length).equal(6);
-    expect(groups[1].length).equal(6);
-    expect(groups[2].length).equal(5);
+    expect(groups[0].length).toBe(6);
+    expect(groups[1].length).toBe(6);
+    expect(groups[2].length).toBe(5);
   });
 
-  it("chunkByCountFair", function () {
+  test("chunkByCountFair", function () {
     const groups = baseArr.chunkByCount(3, true);
 
-    expect(groups[0].length).equal(5);
-    expect(groups[1].length).equal(5);
-    expect(groups[2].length).equal(5);
+    expect(groups[0].length).toBe(5);
+    expect(groups[1].length).toBe(5);
+    expect(groups[2].length).toBe(5);
   });
 
-  it("chunkBySize", function () {
+  test("chunkBySize", function () {
     const groups = baseArr.chunkBySize(7);
 
-    expect(groups[0].length).equal(7);
-    expect(groups[1].length).equal(7);
-    expect(groups[2].length).equal(3);
+    expect(groups[0].length).toBe(7);
+    expect(groups[1].length).toBe(7);
+    expect(groups[2].length).toBe(3);
   });
 
-  it("chunkBySizeFairMore", function () {
+  test("chunkBySizeFairMore", function () {
     const groups = baseArr.chunkBySize(7, true);
 
-    expect(groups[0].length).equal(6);
-    expect(groups[1].length).equal(6);
-    expect(groups[2].length).equal(5);
+    expect(groups[0].length).toBe(6);
+    expect(groups[1].length).toBe(6);
+    expect(groups[2].length).toBe(5);
   });
 
-  it("chunkBySizeFairFewer", function () {
+  test("chunkBySizeFairFewer", function () {
     const baseArr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
 
     const groups = baseArr.chunkBySize(7, true);
 
-    expect(groups[0].length).equal(8);
-    expect(groups[1].length).equal(7);
+    expect(groups[0].length).toBe(8);
+    expect(groups[1].length).toBe(7);
   });
 
-  it("chunkBySizeFairFewerWithMax", function () {
+  test("chunkBySizeFairFewerWithMax", function () {
     const baseArr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
 
     const groups = baseArr.chunkBySize(7, true, true);
 
-    expect(groups[0].length).equal(5);
-    expect(groups[1].length).equal(5);
-    expect(groups[2].length).equal(5);
+    expect(groups[0].length).toBe(5);
+    expect(groups[1].length).toBe(5);
+    expect(groups[2].length).toBe(5);
   });
+
+  test("Does the method throw correct?", function () {
+    const baseArr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17];
+    const groups = baseArr.chunkBySize(2, true);
+    expect(() => {
+      baseArr.chunkBySize(0)
+    }).toThrow(Exception_OutOfBounds);
+
+    expect(groups.length).toBe(9);
+
+    expect(() => {
+      baseArr.chunkByCount(0)
+    }).toThrow(Exception_OutOfBounds);
+  })
 });
 
 describe("async test", () => {
-  it("simple reduce", async () => {
+  test("simple reduce", async () => {
     type ExtendedScore = Score & {
       fetchedAttr: string;
     };
@@ -216,16 +242,16 @@ describe("async test", () => {
       return [...acc, cur as ExtendedScore];
     }, []);
 
-    expect(resultProm).property("then");
-    expect(resultProm).property("catch");
+    expect(resultProm).toHaveProperty("then");
+    expect(resultProm).toHaveProperty("catch");
     const result = await resultProm;
-    expect(result[0]).property("fetchedAttr");
-    expect(result[0].fetchedAttr).equal("SOMETHING_NEW");
+    expect(result[0]).toHaveProperty("fetchedAttr");
+    expect(result[0].fetchedAttr).toBe("SOMETHING_NEW");
   });
 });
 
 describe("findAndReplace", () => {
-  it("single element", () => {
+  test("single element", () => {
     myArr.sortByAttr(x => x.id);
 
     const oldScore = myArr.findAndReplace(x => x.index === 5, ({
@@ -238,14 +264,14 @@ describe("findAndReplace", () => {
       id: "adasdasd"
     } as unknown) as Score);
 
-    expect(myArr.find(x => x.index === 5).id).equal("adasdasd");
-    expect(oldScore.id).equal("5f5f24b8b804f4ead7b82da9");
+    expect(myArr.find(x => x.index === 5).id).toBe("adasdasd");
+    expect(oldScore.id).toBe("5f5f24b8b804f4ead7b82da9");
   });
 
-  it("Insert Instead of Replace", () => {
+  test("Insert Instead of Replace", () => {
     myArr.sortByAttr(x => x.index);
 
-    expect(myArr.find(x => x.index === 500)).equal(undefined);
+    expect(myArr.find(x => x.index === 500)).toBe(undefined);
 
     const oldScore = myArr.findAndReplace(
       x => x.index === 500,
@@ -261,12 +287,12 @@ describe("findAndReplace", () => {
       true
     );
 
-    expect(myArr.find(x => x.index === 500).id).equal("adasdasd");
-    expect(oldScore).equal(null);
-    expect(myArr.length).equal(ASSERTIONS.ARRAY_LENGTH + 1);
+    expect(myArr.find(x => x.index === 500).id).toBe("adasdasd");
+    expect(oldScore).toBe(null);
+    expect(myArr.length).toBe(ASSERTIONS.ARRAY_LENGTH + 1);
   });
 
-  it("findReplace functions", () => {
+  test("findReplace functions", () => {
     myArr.findAndReplace(
       x => x.index === 500,
       x => {
@@ -275,10 +301,10 @@ describe("findAndReplace", () => {
       }
     );
 
-    expect(myArr.find(x => x.index === 500).id).equal("123456");
+    expect(myArr.find(x => x.index === 500).id).toBe("123456");
   });
 
-  it("findReplace functions for not found", () => {
+  test("findReplace functions for not found", () => {
     myArr.findAndReplace(
       x => x.index === 50000,
       x => {
@@ -287,10 +313,10 @@ describe("findAndReplace", () => {
       }
     );
 
-    expect(myArr.find(x => x.index === 50000)).equal(undefined);
+    expect(myArr.find(x => x.index === 50000)).toBe(undefined);
   });
 
-  it("illegal action findReplace functions for not found and insert", () => {
+  test("illegal action findReplace functions for not found and insert", () => {
     try {
       myArr.findAndReplace(
         x => x.index === 50000,
@@ -301,7 +327,7 @@ describe("findAndReplace", () => {
     } catch (err) {
       assertErrorType(err, Exception_FindReplaceIllegalAction);
 
-      expect(err.constructor.name).equal("Exception_FindReplaceIllegalAction");
+      expect(err.constructor.name).toBe("Exception_FindReplaceIllegalAction");
     }
   });
 });
@@ -309,11 +335,11 @@ describe("findAndReplace", () => {
 describe("unionSplit", () => {
   const fruitsToCheck = ["banana", "strawberry", "lemon"];
 
-  it("Who's fruit is it?", () => {
+  test("Who's fruit is it?", () => {
     const result = myArr.unionSplit(fruitsToCheck, (a, b) => a.favoriteFruit === b);
 
-    expect(result.rightSplit.length).equal(1);
-    expect(result.innerJoin.length).equal(7);
-    expect(result.leftSplit.length).equal(11);
+    expect(result.rightSplit.length).toBe(1);
+    expect(result.innerJoin.length).toBe(7);
+    expect(result.leftSplit.length).toBe(11);
   });
 });
