@@ -1,4 +1,16 @@
-const shuffle: <T>(thisArg?: any[]) => T[] = function (thisArg = this) {
+interface Array<T> {
+  /**
+   * Shorthand for shuffling an array.
+   *
+   * Examples:
+   * ```typescript
+   * const randomMyArr = myArr.shuffle();
+   * ```
+   */
+  shuffle(thisArg?: any[]): T[];
+}
+
+Array.prototype.shuffle = function (thisArg = this) {
   return thisArg
     .map(val => ({
       //This magical random is considered more random than the standard Math.random().
@@ -9,13 +21,3 @@ const shuffle: <T>(thisArg?: any[]) => T[] = function (thisArg = this) {
     .sortByAttr(x => x.sort)
     .map(x => x.val);
 };
-
-/**
- * Shorthand for shuffling an array.
- *
- * Examples:
- * ```typescript
- * const randomMyArr = myArr.shuffle();
- * ```
- */
-Array.prototype.shuffle = shuffle;

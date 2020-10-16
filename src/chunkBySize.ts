@@ -1,11 +1,37 @@
 import { Exception_OutOfBounds } from "./customErrors";
 
-const chunkBySize: <T>(
-  chunkSize: number,
-  forceFairness?: boolean,
-  treatChunkSizeAsMax?: boolean,
-  thisArg?: any[]
-) => T[][] = function (
+declare global {
+  interface Array<T> {
+    /**
+     * Split an array into an amount of chunks depending on size.
+     *
+     * Optional force fairness that distributes elements into "fair" groups.
+     * The this paramter treatChunkSizeAsMax prevents the force fairness from distributing
+     * elements into groups at the request size.
+     *
+     * Example:
+     * ```typescript
+     * const chunks = myArr.chunkBySize(5);
+     * // If the arr contains 21 elements, the 21st element will be alone in its own array.
+     * // Sizes of the different arrays: `5,5,5,5,1`
+     * const chunks = myArr.chunkBySize(5, true);
+     * // If the arr contains 21 elements, the 21st element will pe part of the first array.
+     * // Sizes of the different arrays: `6,5,5,5`
+     * const chunks = myArr.chunkBySize(5, true, true);
+     * // If the arr contains 21 elements, all elements will be distributed evenly into 5 groups.
+     * // Sizes of the different arrays: `5,4,4,4,4`
+     * ```
+     */
+    chunkBySize(
+      chunkSize: number,
+      forceFairness?: boolean,
+      treatChunkSizeAsMax?: boolean,
+      thisArg?: any[]
+    ): T[][];
+  }
+}
+
+Array.prototype.chunkBySize = function (
   chunkSize,
   forceFairness = false,
   treatChunkSizeAsMax = false,
@@ -42,25 +68,3 @@ const chunkBySize: <T>(
 
   return result;
 };
-
-/**
- * Split an array into an amount of chunks depending on size.
- *
- * Optional force fairness that distributes elements into "fair" groups.
- * The this paramter treatChunkSizeAsMax prevents the force fairness from distributing
- * elements into groups at the request size.
- *
- * Example:
- * ```typescript
- * const chunks = myArr.chunkBySize(5);
- * // If the arr contains 21 elements, the 21st element will be alone in its own array.
- * // Sizes of the different arrays: `5,5,5,5,1`
- * const chunks = myArr.chunkBySize(5, true);
- * // If the arr contains 21 elements, the 21st element will pe part of the first array.
- * // Sizes of the different arrays: `6,5,5,5`
- * const chunks = myArr.chunkBySize(5, true, true);
- * // If the arr contains 21 elements, all elements will be distributed evenly into 5 groups.
- * // Sizes of the different arrays: `5,4,4,4,4`
- * ```
- */
-Array.prototype.chunkBySize = chunkBySize;

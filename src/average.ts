@@ -1,10 +1,22 @@
 import { Exception_OutOfBounds } from "./customErrors";
 
-const average: <T>(
-  callbackfn?: (value: T) => number,
-  roundNum?: number | null,
-  thisArg?: any[]
-) => number = function (func = x => (x as unknown) as number, round = null, thisArg = this) {
+declare global {
+  interface Array<T> {
+    /**
+     * Shorthand for creating an average by a single attribute
+     *
+     * Examples:
+     * ```typescript
+     * const averageScore = myArr.average(x => x.score);
+     * // Can also be used on arrays of numbers
+     * const averageScore = [1,2,3].average(); // returns 2
+     * ```
+     */
+    average(callbackfn?: (value: T) => number, roundNum?: number | null, thisArg?: any[]): number;
+  }
+}
+
+Array.prototype.average = function (func = x => x, round = null, thisArg = this) {
   if (thisArg.length <= 0) throw new Exception_OutOfBounds();
   if (round !== null) {
     if (round < 0) throw new Exception_OutOfBounds();
@@ -13,15 +25,3 @@ const average: <T>(
   }
   return thisArg.sum(func, thisArg) / thisArg.length;
 };
-
-/**
- * Shorthand for creating an average by a single attribute
- *
- * Examples:
- * ```typescript
- * const averageScore = myArr.average(x => x.score);
- * // Can also be used on arrays of numbers
- * const averageScore = [1,2,3].average(); // returns 2
- * ```
- */
-Array.prototype.average = average;
