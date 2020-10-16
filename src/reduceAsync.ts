@@ -1,15 +1,16 @@
 const reduceAsync: <T>() => <U = T>(
-    callbackfn: (previousValue: U, currentValue: T, currentIndex: number, array: T[]) => Promise<U>,
-    initialVal: U,
-    thisArg?: any[]
-) => Promise<U> = () => function (callback, initialVal, thisArg = this) {
+  callbackfn: (previousValue: U, currentValue: T, currentIndex: number, array: T[]) => Promise<U>,
+  initialVal: U,
+  thisArg?: any[]
+) => Promise<U> = () =>
+  function (callback, initialVal, thisArg = this) {
     const prom = thisArg.reduce(async (accProm, cur, i, arr) => {
-        const acc = await accProm;
-        return await callback(acc, cur, i, arr);
+      const acc = await accProm;
+      return await callback(acc, cur, i, arr);
     }, Promise.resolve(initialVal));
 
     return prom;
-};
+  };
 
 /**
  * Avoid having to fiddle with promise accumulator and resolution in a .reduce.

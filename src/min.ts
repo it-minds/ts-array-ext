@@ -1,5 +1,8 @@
-const min: <T>(callbackfn?: (value: T) => number, thisArg?: any[]) => T = function (func = x => (x as unknown) as number, thisArg = this) {
-    return thisArg.sortByAttr(func, "ASC", thisArg)[0];
+const min: <T>(callbackfn?: (value: T) => number, thisArg?: any[]) => T = function (
+  func = x => (x as unknown) as number,
+  thisArg = this
+) {
+  return thisArg.sortByAttr(func, "ASC", thisArg)[0];
 };
 
 /**

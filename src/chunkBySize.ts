@@ -1,48 +1,47 @@
 import { Exception_OutOfBounds } from "./customErrors";
 
 const chunkBySize: <T>(
-    chunkSize: number,
-    forceFairness?: boolean,
-    treatChunkSizeAsMax?: boolean,
-    thisArg?: any[]
+  chunkSize: number,
+  forceFairness?: boolean,
+  treatChunkSizeAsMax?: boolean,
+  thisArg?: any[]
 ) => T[][] = function (
-    chunkSize,
-    forceFairness = false,
-    treatChunkSizeAsMax = false,
-    thisArg = this
+  chunkSize,
+  forceFairness = false,
+  treatChunkSizeAsMax = false,
+  thisArg = this
 ) {
-        if (chunkSize <= 0) throw new Exception_OutOfBounds();
-        const result: any[][] = [];
+  if (chunkSize <= 0) throw new Exception_OutOfBounds();
+  const result: any[][] = [];
 
-        if (forceFairness) {
-            if (thisArg.length % chunkSize == 0) return thisArg.chunkByCount(thisArg.length / chunkSize);
+  if (forceFairness) {
+    if (thisArg.length % chunkSize == 0) return thisArg.chunkByCount(thisArg.length / chunkSize);
 
-            if (treatChunkSizeAsMax) return thisArg.chunkByCount(Math.ceil(thisArg.length / chunkSize));
+    if (treatChunkSizeAsMax) return thisArg.chunkByCount(Math.ceil(thisArg.length / chunkSize));
 
-            const fewerGroups = thisArg.chunkByCount(Math.floor(thisArg.length / chunkSize));
+    const fewerGroups = thisArg.chunkByCount(Math.floor(thisArg.length / chunkSize));
 
-            const moreGroups = thisArg.chunkByCount(Math.ceil(thisArg.length / chunkSize));
+    const moreGroups = thisArg.chunkByCount(Math.ceil(thisArg.length / chunkSize));
 
-            const fewerAverageDiff = fewerGroups.map(arr => Math.abs(arr.length - chunkSize)).average();
-            const moreAverageDiff = moreGroups.map(arr => Math.abs(arr.length - chunkSize)).average();
+    const fewerAverageDiff = fewerGroups.map(arr => Math.abs(arr.length - chunkSize)).average();
+    const moreAverageDiff = moreGroups.map(arr => Math.abs(arr.length - chunkSize)).average();
 
-            if (fewerAverageDiff < moreAverageDiff) return fewerGroups;
-            if (moreAverageDiff < fewerAverageDiff) return moreGroups;
+    if (fewerAverageDiff < moreAverageDiff) return fewerGroups;
+    if (moreAverageDiff < fewerAverageDiff) return moreGroups;
 
-            const tiebreaker =
-                Math.round(thisArg.length / chunkSize) === Math.ceil(thisArg.length / chunkSize);
-            if (tiebreaker) return moreGroups;
-            else return fewerGroups;
-        }
+    const tiebreaker =
+      Math.round(thisArg.length / chunkSize) === Math.ceil(thisArg.length / chunkSize);
+    if (tiebreaker) return moreGroups;
+    else return fewerGroups;
+  }
 
-        for (let i = 0; i < thisArg.length; i += chunkSize) {
-            const part = thisArg.slice(i, i + chunkSize);
-            result.push(part);
-        }
+  for (let i = 0; i < thisArg.length; i += chunkSize) {
+    const part = thisArg.slice(i, i + chunkSize);
+    result.push(part);
+  }
 
-        return result;
-    };
-
+  return result;
+};
 
 /**
  * Split an array into an amount of chunks depending on size.

@@ -1,10 +1,14 @@
 const sortByAttr: <T>(
-    callbackfn?: (value: T) => string | number,
-    sortDirection?: SortDirection,
-    thisArg?: any[]
-) => T[] = function (func = x => (x as unknown) as string | number, sortDirection = "ASC", thisArg = this) {
-    const sortVal = sortDirection === "ASC" ? 1 : -1;
-    return thisArg.sort((a: any, b: any) => (func(a) > func(b) ? sortVal : -sortVal));
+  callbackfn?: (value: T) => string | number,
+  sortDirection?: SortDirection,
+  thisArg?: any[]
+) => T[] = function (
+  func = x => (x as unknown) as string | number,
+  sortDirection = "ASC",
+  thisArg = this
+) {
+  const sortVal = sortDirection === "ASC" ? 1 : -1;
+  return thisArg.sort((a: any, b: any) => (func(a) > func(b) ? sortVal : -sortVal));
 };
 
 /**
