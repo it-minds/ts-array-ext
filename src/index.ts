@@ -178,7 +178,9 @@ Array.prototype.unionSplit = function (secondArr, comparator, thisArg = this) {
 };
 
 Array.prototype.distinct = function (func = x => x, thisArg = this) {
+  let term : string | number | symbol;
   return thisArg.filter((element, index, arr) => {
-    return arr.findIndex(item => func(element) === func(item)) === index;
+    term = func(element);
+    return arr.findIndex((item) => term === func(item)) === index;
   });
 }

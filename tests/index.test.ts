@@ -371,4 +371,20 @@ describe("Distinct", () => {
     expect(res.length).equal(0);
     expect(res).deep.equal([]);
   });
+
+  it("Only distinct elements (numbers).", () => {
+    const arr = [1, 2, 3];
+    const res = arr.distinct();
+
+    expect(res.length).equal(3);
+    expect(res).deep.equal(arr);
+  });
+
+  it("Multiple identical elements (numbers).", () => {
+    const arr = [1, 2, 3, 1, 2, 3, 1, 2, 3];
+    const res = arr.distinct();
+
+    expect(res.length).equal(3);
+    expect(res).deep.equal([1, 2, 3]);
+  });
 })
