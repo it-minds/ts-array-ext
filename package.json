@@ -7,7 +7,7 @@
   "scripts": {
     "build": "tsc",
     "prepare": "npm run build && npm run lint && npm test",
-    "test": "npx jest",
+    "test": "jest",
     "coverage": "nyc -r lcov -e .ts -x \"*.test.ts\" npm run test",
     "lint": "eslint --fix ."
   },
