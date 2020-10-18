@@ -192,10 +192,12 @@ const userScoreAttempts = myArr.groupBy(
 
 ### chunkBySize
 
+Split an array into an amount of chunks depending on size.
+
 #### Usage
 
 ```typescript
-
+const chunksArray = myArr.chunkBySize(NUM);
 ```
 
 ### chunkByCount
