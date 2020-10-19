@@ -1,6 +1,8 @@
 name: PR Build
 
 on:
+  commit:
+    branches: [main]
   pull_request:
     branches: [main]
 
