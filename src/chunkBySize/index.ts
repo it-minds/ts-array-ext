@@ -44,24 +44,28 @@ Array.prototype.chunkBySize = function (
   const result: any[][] = [];
 
   if (forceFairness) {
-    if (thisArg.length % chunkSize == 0) return thisArg.chunkByCount(thisArg.length / chunkSize);
+    const calculatedChunkCount = thisArg.length / chunkSize;
 
-    if (treatChunkSizeAsMax) return thisArg.chunkByCount(Math.ceil(thisArg.length / chunkSize));
+    if (thisArg.length % chunkSize == 0) return thisArg.chunkByCount(calculatedChunkCount);
 
-    const fewerGroups = thisArg.chunkByCount(Math.floor(thisArg.length / chunkSize));
+    if (treatChunkSizeAsMax) return thisArg.chunkByCount(Math.ceil(calculatedChunkCount));
 
-    const moreGroups = thisArg.chunkByCount(Math.ceil(thisArg.length / chunkSize));
+    // If the array's size can't be evenly divided into the chunkSize we aim to find the best match.
 
-    const fewerAverageDiff = fewerGroups.map(arr => Math.abs(arr.length - chunkSize)).average();
-    const moreAverageDiff = moreGroups.map(arr => Math.abs(arr.length - chunkSize)).average();
+    //chunk the array into the lower & upper bound.
+    // E.G.The array's length is 10 and chunk size is 3, the lower is 3 chunks the upper is 4.
+    const lowerChunkCount = thisArg.chunkByCount(Math.floor(calculatedChunkCount));
+    const upperChunkCount = thisArg.chunkByCount(Math.ceil(calculatedChunkCount));
 
-    if (fewerAverageDiff < moreAverageDiff) return fewerGroups;
-    if (moreAverageDiff < fewerAverageDiff) return moreGroups;
+    //The average size each chunk has from the wanted chunkSize
+    const lowerChunkDiff = lowerChunkCount.map(arr => Math.abs(arr.length - chunkSize)).average();
+    const upperChunkDiff = upperChunkCount.map(arr => Math.abs(arr.length - chunkSize)).average();
 
-    const tiebreaker =
-      Math.round(thisArg.length / chunkSize) === Math.ceil(thisArg.length / chunkSize);
-    if (tiebreaker) return moreGroups;
-    else return fewerGroups;
+    //return the chunks that is closet to the wanted chunkSize
+    if (lowerChunkDiff < upperChunkDiff) return lowerChunkCount;
+    if (upperChunkDiff < lowerChunkDiff) return upperChunkCount;
+
+    return lowerChunkCount;
   }
 
   for (let i = 0; i < thisArg.length; i += chunkSize) {

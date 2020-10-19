@@ -1,8 +1,12 @@
 name: PR Build
 
 on:
+  push:
+    branches: [main]
   pull_request:
     branches: [main]
+  schedule:
+    - cron: "0 0 */2 * *"
 
 jobs:
   build:
@@ -15,3 +19,4 @@ jobs:
       - run: npm ci
       - run: npm run build
       - run: npm test
+      - run: bash <(curl -s https://codecov.io/bash)
