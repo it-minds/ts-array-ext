@@ -105,12 +105,6 @@ describe("calculate", () => {
     const score = myArr.median(x => x.age).age;
     expect(score).equal(38);
   });
-
-  it("avg", function () {
-    const result = myArr.average(x => x.age, 2);
-
-    expect(result).equal(36.06);
-  });
 });
 
 describe("groupBy", function () {
@@ -140,61 +134,6 @@ describe("groupBy", function () {
     );
 
     expect(Object.keys(groups).length).equal(14);
-  });
-});
-
-describe("chunk", function () {
-  const baseArr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
-
-  it("chunkByCount", function () {
-    const groups = baseArr.chunkByCount(3);
-
-    expect(groups[0].length).equal(6);
-    expect(groups[1].length).equal(6);
-    expect(groups[2].length).equal(5);
-  });
-
-  it("chunkByCountFair", function () {
-    const groups = baseArr.chunkByCount(3, true);
-
-    expect(groups[0].length).equal(5);
-    expect(groups[1].length).equal(5);
-    expect(groups[2].length).equal(5);
-  });
-
-  it("chunkBySize", function () {
-    const groups = baseArr.chunkBySize(7);
-
-    expect(groups[0].length).equal(7);
-    expect(groups[1].length).equal(7);
-    expect(groups[2].length).equal(3);
-  });
-
-  it("chunkBySizeFairMore", function () {
-    const groups = baseArr.chunkBySize(7, true);
-
-    expect(groups[0].length).equal(6);
-    expect(groups[1].length).equal(6);
-    expect(groups[2].length).equal(5);
-  });
-
-  it("chunkBySizeFairFewer", function () {
-    const baseArr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
-
-    const groups = baseArr.chunkBySize(7, true);
-
-    expect(groups[0].length).equal(8);
-    expect(groups[1].length).equal(7);
-  });
-
-  it("chunkBySizeFairFewerWithMax", function () {
-    const baseArr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
-
-    const groups = baseArr.chunkBySize(7, true, true);
-
-    expect(groups[0].length).equal(5);
-    expect(groups[1].length).equal(5);
-    expect(groups[2].length).equal(5);
   });
 });
 
