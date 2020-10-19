@@ -182,11 +182,15 @@ describe("chunk", function () {
   });
 
   test("chunkBySize", function () {
-    const groups = baseArr.chunkBySize(7);
+    const baseArr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17];
+    let groups = baseArr.chunkBySize(7);
 
     expect(groups[0].length).toBe(7);
     expect(groups[1].length).toBe(7);
-    expect(groups[2].length).toBe(3);
+    expect(groups[2].length).toBe(4);
+
+    groups = baseArr.chunkBySize(2, true);
+    expect(groups.length).toBe(9);
   });
 
   test("chunkBySizeFairMore", function () {
@@ -218,12 +222,9 @@ describe("chunk", function () {
 
   test("Does the method throw correct?", function () {
     const baseArr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17];
-    const groups = baseArr.chunkBySize(2, true);
     expect(() => {
       baseArr.chunkBySize(0);
     }).toThrow(Exception_OutOfBounds);
-
-    expect(groups.length).toBe(9);
 
     expect(() => {
       baseArr.chunkByCount(0);
