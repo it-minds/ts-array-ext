@@ -11,3 +11,4 @@ import "./shuffle";
 import "./sortByAttr";
 import "./sum";
 import "./unionSplit";
+import "./distinct";
