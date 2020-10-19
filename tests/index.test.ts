@@ -1,7 +1,6 @@
 import "../src/index";
 
 import { assert, expect } from "chai";
-import { describe } from "mocha";
 
 import { assertErrorType, Exception_FindReplaceIllegalAction } from "../src/utils/customErrors";
 import { myArr, Score } from "./testData";
@@ -60,7 +59,7 @@ describe("sort", function () {
 
 describe("shuffle", () => {
   it("Shuffle 1 mio times and expect results to be close to average", function (done) {
-    this.timeout(5000);
+    
     let roll = 0;
     const counts: { [k: string]: number } = {};
 
