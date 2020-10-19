@@ -1,5 +1,11 @@
 import { Exception_OutOfBounds } from "./customErrors";
 
+/**
+ * Modules in typescript is defined as any file containing a top level import or export.
+ * https://www.typescriptlang.org/docs/handbook/modules.html
+ * Since typescript modules are scoped, and we are trying to modify the global module we have to use the declare global statement to change the Array prototype.
+ * https://www.typescriptlang.org/docs/handbook/declaration-files/templates/global-modifying-module-d-ts.html
+ */
 declare global {
   interface Array<T> {
     /**
