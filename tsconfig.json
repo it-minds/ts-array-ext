@@ -10,6 +10,6 @@
     "outDir": "build",
     "resolveJsonModule": true
   },
-  "include": ["src/**/*.ts", "src/utils/typeGuards.ts", "src/utils/customErrors.ts"],
+  "include": ["src/**/*.ts"],
   "exclude": ["node_modules", "build/**/*"]
 }
