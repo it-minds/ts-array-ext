@@ -4,6 +4,9 @@
   "description": "A small library with typed array operations.",
   "main": "build/index.js",
   "types": "build/index.d.ts",
+  "files": [
+    "build"
+  ],
   "scripts": {
     "build": "tsc",
     "prepare": "npm run build && npm run lint && npm test",
