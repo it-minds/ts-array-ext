@@ -59,7 +59,6 @@ describe("sort", function () {
 
 describe("shuffle", () => {
   it("Shuffle 1 mio times and expect results to be close to average", function (done) {
-    
     let roll = 0;
     const counts: { [k: string]: number } = {};
 
