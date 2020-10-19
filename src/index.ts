@@ -1,6 +1,7 @@
 import "./average";
 import "./chunkByCount";
 import "./chunkBySize";
+import "./distinct";
 import "./findAndReplace";
 import "./groupBy";
 import "./max";

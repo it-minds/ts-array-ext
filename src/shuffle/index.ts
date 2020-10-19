@@ -1,13 +1,17 @@
-interface Array<T> {
-  /**
-   * Shorthand for shuffling an array.
-   *
-   * Examples:
-   * ```typescript
-   * const randomMyArr = myArr.shuffle();
-   * ```
-   */
-  shuffle(thisArg?: any[]): T[];
+import "../sortByAttr";
+
+declare global {
+  interface Array<T> {
+    /**
+     * Shorthand for shuffling an array.
+     *
+     * Examples:
+     * ```typescript
+     * const randomMyArr = myArr.shuffle();
+     * ```
+     */
+    shuffle(thisArg?: any[]): T[];
+  }
 }
 
 Array.prototype.shuffle = function (thisArg = this) {
