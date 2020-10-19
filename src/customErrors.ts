@@ -49,7 +49,7 @@ export class Exception_FindReplaceIllegalAction extends BaseException {
  * ```
  */
 interface ClassBuilder<T = BaseException> {
-  new(msg: string): T;
+  new (msg: string): T;
   defaultMessage: string;
   key: string;
 }

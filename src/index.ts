@@ -179,9 +179,9 @@ Array.prototype.unionSplit = function (secondArr, comparator, thisArg = this) {
 
 Array.prototype.distinct = function (func = x => x, thisArg = this) {
   let term: string | number | symbol;
-  
+
   return thisArg.filter((element, index, arr) => {
     term = func(element);
-    return arr.findIndex((item) => term === func(item)) === index;
+    return arr.findIndex(item => term === func(item)) === index;
   });
-}
+};

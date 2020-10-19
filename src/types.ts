@@ -217,13 +217,10 @@ interface Array<T> {
    * ```typescript
    * const arr = ["banana", "strawberry", "lemon", "banana", "strawberry", "lemon", "banana", "strawberry", "lemon"];
    * const res = arr.distinct();
-   * 
+   *
    * const arr = [{ id: 0, fruit: "banana" }, { id: 1, fruit: "strawberry" }, { id: 2, fruit: "lemon" }];
    * const res = arr.distinct(x => x.fruit);
    * ```
    */
-  distinct(
-    callbackfn?: (value: T) => string | number | symbol,
-    thisArg?: any[]
-  ): T[]
+  distinct(callbackfn?: (value: T) => string | number | symbol, thisArg?: any[]): T[];
 }

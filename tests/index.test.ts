@@ -328,7 +328,17 @@ describe("Distinct", () => {
   });
 
   it("Multiple identical elements.", () => {
-    const arr = ["banana", "strawberry", "lemon", "banana", "strawberry", "lemon", "banana", "strawberry", "lemon"];
+    const arr = [
+      "banana",
+      "strawberry",
+      "lemon",
+      "banana",
+      "strawberry",
+      "lemon",
+      "banana",
+      "strawberry",
+      "lemon"
+    ];
     const res = arr.distinct();
 
     expect(res.length).equal(3);
@@ -359,9 +369,11 @@ describe("Distinct", () => {
     const res = arr.distinct(x => x.fruit);
 
     expect(res.length).equal(3);
-    expect(res).deep.equal([{ id: 0, fruit: "banana" },
-    { id: 1, fruit: "strawberry" },
-    { id: 2, fruit: "lemon" }])
+    expect(res).deep.equal([
+      { id: 0, fruit: "banana" },
+      { id: 1, fruit: "strawberry" },
+      { id: 2, fruit: "lemon" }
+    ]);
   });
 
   it("Empty", () => {
@@ -387,4 +399,4 @@ describe("Distinct", () => {
     expect(res.length).equal(3);
     expect(res).deep.equal([1, 2, 3]);
   });
-})
+});
