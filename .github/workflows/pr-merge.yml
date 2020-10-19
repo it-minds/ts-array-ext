@@ -15,4 +15,4 @@ jobs:
       - run: npm ci
       - run: npm run build
       - run: npm test
-      - run: curl -s https://codecov.io/bash
+      - run: bash <(curl -s https://codecov.io/bash)
