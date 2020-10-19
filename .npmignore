@@ -2,3 +2,5 @@ src
 .github
 tests
 tsconfig.json
+*.test.js
+*.test.d.ts

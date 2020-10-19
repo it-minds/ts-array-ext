@@ -1,5 +1,5 @@
-import "../chunkByCount";
 import "../average";
+import "../chunkByCount";
 
 import { Exception_OutOfBounds } from "../utils/customErrors";
 

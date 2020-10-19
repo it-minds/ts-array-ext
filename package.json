@@ -8,7 +8,6 @@
     "build": "tsc",
     "prepare": "npm run build && npm run lint && npm test",
     "test": "jest",
-    "coverage": "nyc -r lcov -e .ts -x \"*.test.ts\" npm run test",
     "lint": "eslint --fix ."
   },
   "keywords": [
@@ -19,6 +18,7 @@
   "contributors": [
     "Martin Johannesson <mjh@it-minds.dk>",
     "Phillip Phoelich <pph@it-minds.dk>",
+    "Jeppe Trip Kofoed <jtk@it-minds.dk>",
     "Ariel Hadad <arielhad@gmail.com>"
   ],
   "license": "MPL-2.0",
@@ -34,12 +34,9 @@
     "eslint-plugin-simple-import-sort": "^5.0.3",
     "husky": "^4.3.0",
     "jest": "^26.5.3",
-    "nyc": "^15.1.0",
     "prettier": "^2.1.2",
     "ts-jest": "^26.4.1",
-    "ts-node": "^9.0.0",
-    "typescript": "^4.0.3",
-    "uglify-js": "^3.11.3"
+    "typescript": "^4.0.3"
   },
   "homepage": "https://github.com/it-minds-opensource/ts-array-ext",
   "bugs": {
@@ -53,7 +50,7 @@
   "private": false,
   "husky": {
     "hooks": {
-      "pre-commit": "npm run build && npm run lint && npm test"
+      "pre-commit": "npm run prepare"
     }
   }
 }
