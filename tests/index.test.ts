@@ -2,7 +2,7 @@ import "../src/index";
 
 import { assert, expect } from "chai";
 
-import { assertErrorType, Exception_FindReplaceIllegalAction } from "../src/customErrors";
+import { assertErrorType, Exception_FindReplaceIllegalAction } from "../src/utils/customErrors";
 import { myArr, Score } from "./testData";
 
 const ASSERTIONS = {
