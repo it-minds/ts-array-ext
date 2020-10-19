@@ -1,3 +1,5 @@
+import "../sum";
+
 import { Exception_OutOfBounds } from "../utils/customErrors";
 
 /**
