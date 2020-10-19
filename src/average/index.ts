@@ -1,4 +1,4 @@
-import { Exception_OutOfBounds } from "./customErrors";
+import { Exception_OutOfBounds } from "../utils/customErrors";
 
 /**
  * Modules in typescript is defined as any file containing a top level import or export.

@@ -1,4 +1,4 @@
-import { Exception_OutOfBounds } from "./customErrors";
+import { Exception_OutOfBounds } from "../utils/customErrors";
 
 declare global {
   interface Array<T> {

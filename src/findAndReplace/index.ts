@@ -1,5 +1,5 @@
-import { Exception_FindReplaceIllegalAction } from "./customErrors";
-import { isFunction } from "./typeGuards";
+import { Exception_FindReplaceIllegalAction } from "../utils/customErrors";
+import { isFunction } from "../utils/typeGuards";
 
 declare global {
   interface Array<T> {
