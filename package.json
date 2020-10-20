@@ -7,7 +7,6 @@
   "scripts": {
     "build": "tsc",
     "validate": "npm run build && npm run lint && npm test",
-    "postinstall": "npm run validate",
     "test": "jest",
     "lint": "eslint --fix ."
   },
