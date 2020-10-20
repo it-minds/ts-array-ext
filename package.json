@@ -2,11 +2,8 @@
   "name": "ts-array-ext",
   "version": "1.1.5",
   "description": "A small library with typed array operations.",
-  "main": "build/index.js",
-  "types": "build/index.d.ts",
-  "files": [
-    "build"
-  ],
+  "main": "index.js",
+  "types": "index.d.ts",
   "scripts": {
     "build": "tsc",
     "prepare": "npm run build && npm run lint && npm test",
