@@ -36,14 +36,14 @@ npm i ts-array-ext --save
 Then either import the entire lib:
 
 ```typescript
-import "ts-attay-ext";
+import "ts-array-ext";
 ```
 
 Or the individual functions.
 
 ```typescript
-import "ts-attay-ext/min";
-import "ts-attay-ext/sum";
+import "ts-array-ext/min";
+import "ts-array-ext/sum";
 ```
 
 Your arrays will have the functions.
