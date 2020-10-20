@@ -30,9 +30,10 @@ jobs:
       - run: git config --global user.email "github-cd-bot@it-minds.dk"
       - run: npm version --no-git-tag-version ${{ github.event.release.tag_name }}
       - run: npm run build
-      - run: mv LICENSE build/LICENSE
-      - run: mv package.json build/package.json
-      - run: mv README.md build/README.md
+      - run: cp LICENSE build/LICENSE
+      - run: cp package.json build/package.json
+      - run: cp README.md build/README.md
+      - run: cd build
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
