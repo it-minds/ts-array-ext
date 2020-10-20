@@ -5,19 +5,7 @@ on:
     types: [published]
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
-        with:
-          node-version: 12
-      - run: npm ci
-      - run: npm run build
-      - run: npm test
-
   publish-npm:
-    needs: build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -28,11 +16,15 @@ jobs:
       - run: npm ci
       - run: git config --global user.name "GitHub CD bot"
       - run: git config --global user.email "github-cd-bot@it-minds.dk"
-      - run: npm version ${{ github.event.release.tag_name }}
+      - run: npm version --no-git-tag-version ${{ github.event.release.tag_name }}
       - run: npm run build
-      - run: npm publish
+      - run: cp LICENSE build/LICENSE
+      - run: cp package.json build/package.json
+      - run: cp README.md build/README.md
+      - run: cp .npmignore build/.npmignore
+      - run: cd build && npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
-      - run: git push
-        env:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+      # - run: git push
+      #   env:
+      #     github-token: ${{ secrets.GITHUB_TOKEN }}

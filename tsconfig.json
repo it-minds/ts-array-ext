@@ -3,7 +3,7 @@
     "module": "commonjs",
     "target": "es6",
     "lib": ["dom", "es2017"],
-    "rootDirs": ["src", "tests"],
+    "rootDirs": ["src"],
     "strict": false,
     "noImplicitAny": true,
     "declaration": true,
