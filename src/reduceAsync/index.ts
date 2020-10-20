@@ -2,8 +2,6 @@ interface Array<T> {
   /**
    * Avoid having to fiddle with promise accumulator and resolution in a .reduce.
    *
-   *
-   *
    * Example: (a map would be better here - sue me)
    * ```typescript
    * const resultProm = myArr.reduceAsync<ExtendedScore[]>(async (acc, cur) => {

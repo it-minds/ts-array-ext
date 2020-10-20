@@ -7,9 +7,9 @@ interface Array<T> {
    * Example
    * ```typescript
    * const lowestFirst = myArr.SortByArg(x => x.score);
-   * const lowestFirst = myArr.SortByArg(x => x.score, 0);
+   * const lowestFirst = myArr.SortByArg(x => x.score, "ASC");
    *
-   * const highestFirst = myArr.SortByArg(x => x.score, 1);
+   * const highestFirst = myArr.SortByArg(x => x.score, "DESC");
    * ```
    */
   sortByAttr(

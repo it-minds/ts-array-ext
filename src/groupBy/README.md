@@ -1,16 +1,20 @@
-### GroupBy
+# GroupBy
 
-#### Usage
+Shorthand for creating a dictionary object with the key
+
+## Example
 
 ```typescript
 const map = myArr.groupBy(x => x.userId);
 ```
 
+## Advanced
+
 It is possible to add another callback for each of the groups' array.
 
-##### Advanced
+Here are some examples:
 
-Sum
+### Sum
 
 ```typescript
 const userTotalScores = myArr.groupBy(
@@ -19,7 +23,9 @@ const userTotalScores = myArr.groupBy(
 );
 ```
 
-Sort
+Returns key value pair with userId as key and the users total score as value.
+
+### Sort
 
 ```typescript
 const usersHighScores = myArr.groupBy(
@@ -28,7 +34,9 @@ const usersHighScores = myArr.groupBy(
 );
 ```
 
-Nested
+Returns key value pair with userId as key and their scores ranked from highest to lowest as value.
+
+### Nested
 
 ```typescript
 const userScoreAttempts = myArr.groupBy(
@@ -39,4 +47,14 @@ const userScoreAttempts = myArr.groupBy(
       arr2 => arr2.length
     )
 );
+
+// result type
+{
+  [userId: string] : {
+    [score: number]: number;
+  }
+}
+
 ```
+
+Returns key value pair with userId as key and a dictionary with each score and count of occurrence.

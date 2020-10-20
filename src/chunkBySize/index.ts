@@ -9,7 +9,7 @@ declare global {
      * Split an array into an amount of chunks depending on size.
      *
      * Optional force fairness that distributes elements into "fair" groups.
-     * The this paramter treatChunkSizeAsMax prevents the force fairness from distributing
+     * The this parameter treatChunkSizeAsMax prevents the force fairness from distributing
      * elements into groups at the request size.
      *
      * Example:

@@ -1,4 +1,4 @@
-### Shuffle
+# Shuffle
 
 Shuffled an array using the following algorithm:
 
@@ -6,7 +6,7 @@ Shuffled an array using the following algorithm:
 
 Tested to practically shuffle evenly with an error margin of **< 0.2%**
 
-#### Usage
+## Example
 
 ```typescript
 const randomSortArr = myArr.shuffle();
