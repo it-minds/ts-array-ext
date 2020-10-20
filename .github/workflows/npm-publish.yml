@@ -21,10 +21,9 @@ jobs:
       - run: cp LICENSE build/LICENSE
       - run: cp package.json build/package.json
       - run: cp README.md build/README.md
-      - run: cd build
-      - run: npm publish
+      - run: cd build && npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
-      - run: git push
-        env:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+      # - run: git push
+      #   env:
+      #     github-token: ${{ secrets.GITHUB_TOKEN }}
