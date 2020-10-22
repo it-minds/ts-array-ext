@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Ask a question
+    url: mailto:opensource@it-minds.dk
+    about: Ask us questions directly by sending an email.
