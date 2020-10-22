@@ -1,14 +1,13 @@
 {
   "name": "ts-array-ext",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "description": "A small library with typed array operations.",
-  "main": "build/index.js",
-  "types": "build/index.d.ts",
+  "main": "index.js",
+  "types": "index.d.ts",
   "scripts": {
     "build": "tsc",
-    "prepare": "npm run build && npm run lint && npm test",
-    "test": "mocha -r ts-node/register tests/**/*.test.ts",
-    "coverage": "nyc -r lcov -e .ts -x \"*.test.ts\" npm run test",
+    "validate": "npm run build && npm run lint && npm test",
+    "test": "jest",
     "lint": "eslint --fix ."
   },
   "keywords": [
@@ -18,26 +17,26 @@
   "author": "IT Minds Opensource <opensource@it-minds.dk> (<it-minds.dk>)",
   "contributors": [
     "Martin Johannesson <mjh@it-minds.dk>",
-    "Phillip Phoelich <pph@it-minds.dk>"
+    "Phillip Phoelich <pph@it-minds.dk>",
+    "Jeppe Trip Kofoed <jtk@it-minds.dk>",
+    "Ariel Hadad <arielhad@gmail.com>"
   ],
   "license": "MPL-2.0",
   "devDependencies": {
-    "@types/chai": "^4.2.12",
-    "@types/mocha": "^8.0.3",
+    "@types/chai": "^4.2.14",
+    "@types/jest": "^26.0.14",
     "@typescript-eslint/eslint-plugin": "^4.4.1",
     "@typescript-eslint/parser": "^4.4.1",
     "chai": "^4.2.0",
     "eslint": "^7.11.0",
-    "eslint-config-prettier": "^6.12.0",
+    "eslint-config-prettier": "^6.13.0",
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-simple-import-sort": "^5.0.3",
     "husky": "^4.3.0",
-    "mocha": "^8.1.3",
-    "nyc": "^15.1.0",
+    "jest": "^26.5.3",
     "prettier": "^2.1.2",
-    "ts-node": "^9.0.0",
-    "typescript": "^4.0.2",
-    "uglify-js": "^3.10.4"
+    "ts-jest": "^26.4.1",
+    "typescript": "^4.0.3"
   },
   "homepage": "https://github.com/it-minds-opensource/ts-array-ext",
   "bugs": {
@@ -51,7 +50,7 @@
   "private": false,
   "husky": {
     "hooks": {
-      "pre-commit": "npm run build && npm run lint && npm test"
+      "pre-commit": "npm run validate"
     }
   }
 }

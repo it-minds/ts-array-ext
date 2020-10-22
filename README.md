@@ -1,8 +1,10 @@
-# TS-Array-Ext
-
+<h1 align="center">TS-Array-Ext</h1>
 <p align="center">
-Fast <b><2kB</b> array utility library with a modern API</p>
-<br>
+Fast <b>&lt;2kB</b> array utility library with a modern API
+<br/>
+<i>by IT Minds </i>
+</p>
+<br/>
 
 ![](https://badgen.net/bundlephobia/minzip/ts-array-ext?color=blue)
 ![](https://badgen.net/npm/dt/ts-array-ext?color=blue)
@@ -10,6 +12,7 @@ Fast <b><2kB</b> array utility library with a modern API</p>
 ![](https://badgen.net/npm/types/ts-array-ext?color=blue)
 ![](https://badgen.net/david/dev/IT-Minds-opensource/ts-array-ext?color=blue)
 ![](https://badgen.net/david/dep/IT-Minds-opensource/ts-array-ext?color=blue)
+![](https://badgen.net/codecov/c/github/IT-Minds-opensource/ts-array-ext/main?color=blue)
 
 > TS-Array-Ext is a minimalist TypeScript library that provides a few utility functions to the Array prototype class.
 > Inspired by LINQ functionality we aim to bring a few easy to use functions that ourselves keep rewriting over and over. No longer. It is time to extend base JavaScript Array functions.
@@ -30,10 +33,23 @@ Fast <b><2kB</b> array utility library with a modern API</p>
 npm i ts-array-ext --save
 ```
 
-Then simply import at top level for global use or scoped if using webpack
+Then either import the entire lib:
 
 ```typescript
-import "ts-attay-ext";
+import "ts-array-ext";
+```
+
+Or the individual functions.
+
+```typescript
+import "ts-array-ext/min";
+import "ts-array-ext/sum";
+```
+
+Your arrays will have the functions.
+
+```typescript
+const totalScore = myArr.sum(x => x.score);
 ```
 
 ### Demo
@@ -42,166 +58,21 @@ Checkout [this playground](https://stackblitz.com/edit/ts-array-ext?devtoolsheig
 
 ---
 
-## API
+### API
 
-It's easy to use TS-Array-Ext.
-
-- [SortByArg](#SortByArg)
-- [Shuffle](#Shuffle)
-- [Sum](#Sum)
-- [Min](#Min)
-- [Max](#Max)
-- [Median](#Median)
-- [GroupBy](#GroupBy)
-- [findAndReplace](#findOrCreate)
-- [reduceAsync](#reduceAsync)
-- [chunkBySize](#chunkBySize)
-- [chunkByCount](#chunkByCount)
-
-### SortByArg
-
-Sorts an array by a single comparable attribute.
-Additional options for sorting descending. Returns the sorted array.
-
-#### Usage
-
-```typescript
-const lowestFirst = myArr.SortByArg(x => x.score);
-
-const lowestFirst = myArr.SortByArg(x => x.score, SortDirection.ASC);
-
-const lowestFirst = myArr.SortByArg(x => x.score, 0);
-
-const highestFirst = myArr.SortByArg(x => x.score, SortDirection.DESC);
-
-const highestFirst = myArr.SortByArg(x => x.score, 1);
-```
-
-### Shuffle
-
-Shuffled an array using the following algorithm:
-
-`Math.floor(1e14 * Math.random() * Math.random()) % (this.length * 100)`
-
-Tested to practically shuffle evenly with an error margin of **< 0.2%**
-
-#### Usage
-
-```typescript
-const randomSortArr = myArr.shuffle();
-```
-
-### Sum
-
-#### Usage
-
-```typescript
-const totalScore = myArr.sum(x => x.score);
-```
-
-### Average
-
-#### Usage
-
-```typescript
-const avgScore = myArr.average(x => x.score);
-```
-
-### Min
-
-#### Usage
-
-```typescript
-const lowestScore = myArr.min(x => x.score);
-```
-
-### Max
-
-#### Usage
-
-```typescript
-const highestScore = myArr.max(x => x.score);
-```
-
-### Median
-
-#### Usage
-
-```typescript
-const medianScore = myArr.median(x => x.score);
-```
-
-### GroupBy
-
-#### Usage
-
-```typescript
-const map = myArr.groupBy(x => x.userId);
-```
-
-It is possible to add another callback for each of the groups' array.
-
-##### Advanced
-
-Sum
-
-```typescript
-const userTotalScores = myArr.groupBy(
-  x => x.userId,
-  arr => arr.sum(x => x.score)
-);
-```
-
-Sort
-
-```typescript
-const usersHighScores = myArr.groupBy(
-  x => x.userId,
-  arr => arr.sortByAttr(x => x.score, SortDirection.DESC)
-);
-```
-
-Nested
-
-```typescript
-const userScoreAttempts = myArr.groupBy(
-  x => x.userId,
-  arr =>
-    arr.groupBy(
-      x => x.score,
-      arr2 => arr2.length
-    )
-);
-```
-
-### findAndReplace
-
-#### Usage
-
-```typescript
-
-```
-
-### reduceAsync
-
-#### Usage
-
-```typescript
-
-```
-
-### chunkBySize
-
-#### Usage
-
-```typescript
-
-```
-
-### chunkByCount
-
-#### Usage
-
-```typescript
-
-```
+| function                                         | description                                                            |
+| ------------------------------------------------ | ---------------------------------------------------------------------- |
+| [average](./src/average/README.md)               | Calculate the average values of an attribute                           |
+| [chunkByCount](./src/chunkByCount/README.md)     | Split array into amount of chunks by input                             |
+| [chunkBySize](./src/chunkBySize/README.md)       | Split array into amount of chunks by size                              |
+| [distinct](./src/distinct/README.md)             | Get distinct elements by attribute                                     |
+| [findAndReplace](./src/findAndReplace/README.md) | Find and replace or create value                                       |
+| [groupBy](./src/groupBy/README.md)               | Group array into arrays by difference value of attribute               |
+| [max](./src/max/README.md)                       | Find the element with the max value of selected attribute              |
+| [median](./src/median/README.md)                 | Find the element with the median value of selected attribute           |
+| [min](./src/min/README.md)                       | Find the element with the min value of selected attribute              |
+| [reduceAsync](./src/reduceAsync/README.md)       | Clean async version of `.reduce`                                       |
+| [shuffle](./src/shuffle/README.md)               | Shuffles the array                                                     |
+| [sortByAttr](./src/sortByAttr/README.md)         | Sort the array by a selected attribute                                 |
+| [sum](./src/sum/README.md)                       | Summation of values of a selected attribute                            |
+| [unionSplit](./src/unionSplit/README.md)         | Split the array by a given array and comparator into left/middle/right |

@@ -48,11 +48,11 @@ export class Exception_FindReplaceIllegalAction extends BaseException {
  * myMethod(OutOfBounds) // OK
  * ```
  */
-interface ClassBuilder<T = BaseException> {
-  new (msg: string): T;
-  defaultMessage: string;
-  key: string;
-}
+// interface ClassBuilder<T = BaseException> {
+//   new (msg: string): T;
+//   defaultMessage: string;
+//   key: string;
+// }
 
 /**
  * Assert and type guard input error to be one of the custom Error types.
@@ -69,18 +69,18 @@ interface ClassBuilder<T = BaseException> {
  * @param err instance of the error to assert and type guard
  * @param errorClass Static class input of a custom Error
  */
-export function assertErrorType<T extends BaseException>(
-  err: BaseException,
-  errorClass: ClassBuilder<T>
-): asserts err is T {
-  if (err._e !== true) {
-    throw Error("Not a custom Error");
-  }
+// export function assertErrorType<T extends BaseException>(
+//   err: BaseException,
+//   errorClass: ClassBuilder<T>
+// ): asserts err is T {
+//   if (err._e !== true) {
+//     throw Error("Not a custom Error");
+//   }
 
-  if (err.key !== errorClass.key) {
-    throw Error("Not the same error type");
-  }
-}
+//   if (err.key !== errorClass.key) {
+//     throw Error("Not the same error type");
+//   }
+// }
 
 /**
  * Custom type guard of the exception classes.
@@ -97,9 +97,9 @@ export function assertErrorType<T extends BaseException>(
  * @param err instance of the error to type guard
  * @param errorClass Static class input of a custom Error
  */
-export function isErrorType<T extends BaseException>(
-  err: BaseException,
-  errorClass: ClassBuilder<T>
-): err is T {
-  return err._e === true && err.key === errorClass.key;
-}
+// export function isErrorType<T extends BaseException>(
+//   err: BaseException,
+//   errorClass: ClassBuilder<T>
+// ): err is T {
+//   return err._e === true && err.key === errorClass.key;
+// }
