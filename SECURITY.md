@@ -8,7 +8,7 @@ Our principle developers ensure that security is top-priority in all of our work
 
 ## Reporting vulnerabilities
 
-Report security vulnerabilities by emailing the lead maintainer at opensoure@it-minds.dk.
+Report security vulnerabilities by emailing the lead maintainer at opensource@it-minds.dk.
 
 The lead maintainer will acknowledge your email within 48 hours,
 and will send a more detailed response within the following 48 hours, indicating the next steps in handling your report.
