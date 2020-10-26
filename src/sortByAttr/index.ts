@@ -1,7 +1,6 @@
+type SortDirection = "ASC" | "DESC";
 export {};
 declare global {
-  type SortDirection = "ASC" | "DESC";
-
   interface Array<T> {
     /**
      * Shorthand for sorting an array by a single comparable attribute. Additional options for sorting descending.
