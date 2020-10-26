@@ -1,3 +1,6 @@
+/* 
+  Individual bundling of single functions with no import statement causes problems. The export{} is necessary if, and only if, explicit module resultion isn't used (no import or export statement exists.)
+*/
 export {};
 declare global {
   interface Array<T> {
