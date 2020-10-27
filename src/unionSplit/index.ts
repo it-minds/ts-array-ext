@@ -1,13 +1,16 @@
-interface Array<T> {
-  unionSplit<U = T>(
-    secondArr: Array<U>,
-    comparator: (a: T, b: U) => boolean,
-    thisArg?: any[]
-  ): {
-    leftSplit: T[];
-    rightSplit: U[];
-    innerJoin: T[];
-  };
+export {};
+declare global {
+  interface Array<T> {
+    unionSplit<U = T>(
+      secondArr: Array<U>,
+      comparator: (a: T, b: U) => boolean,
+      thisArg?: any[]
+    ): {
+      leftSplit: T[];
+      rightSplit: U[];
+      innerJoin: T[];
+    };
+  }
 }
 
 Array.prototype.unionSplit = function (secondArr, comparator, thisArg = this) {
