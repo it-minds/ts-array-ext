@@ -42,4 +42,19 @@ describe("unionSplit", () => {
     expect(result.innerJoin.length).equal(3);
     expect(result.leftSplit.length).equal(4);
   });
+
+  it("Who's fruit is it? With Zip", () => {
+    const result = myArr.unionSplit(
+      fruitsToCheck,
+      (a, b) => a.favoriteFruit === b,
+      (u, f) => ({
+        age: u.age,
+        fruit: f
+      })
+    );
+
+    expect(result.rightSplit.length).equal(1);
+    expect(result.innerJoin.length).equal(3);
+    expect(result.leftSplit.length).equal(4);
+  });
 });
