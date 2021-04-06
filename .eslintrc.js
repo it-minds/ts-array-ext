@@ -20,13 +20,12 @@ module.exports = {
     "eslint:recommended",
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
-    "prettier/@typescript-eslint",
     "plugin:prettier/recommended" // Make sure this is always the last element in the array.
   ],
   rules: {
     "prettier/prettier": ["error", {}, { usePrettierrc: true }],
     "@typescript-eslint/explicit-function-return-type": "off",
-    "simple-import-sort/sort": "error",
+    "simple-import-sort/imports": "error",
     "@typescript-eslint/no-explicit-any": "off"
   }
 };
